@@ -11,6 +11,7 @@ using WestBlog.Models;
 
 namespace WestBlog.Controllers
 {
+    //***
     public class PostsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -18,14 +19,15 @@ namespace WestBlog.Controllers
         // GET: Posts
         public ActionResult Index()
         {
-            var es = new EmailService();
-            var msg = new IdentityMessage();
-            msg.Destination = "abigailwwest@gmail.com";
-            msg.Body = "Body text";
-            msg.Subject = "test subject";
-            es.SendAsync(msg);
-
             return View(db.Posts.OrderByDescending(p=>p.Created).ToList());
+        }
+
+        [Authorize(Roles ="Admin")]  //You can add this above the controller level (at ***) to apply it to all actions in the class
+                                     // Can be layered. Ex: [Authorize] (all logged in users) at class level and
+                                     //                     [Authorize(Roles ="Admin, Moderator")] individual controller level
+        public ActionResult Admin()
+        {
+            return View(db.Posts.OrderByDescending(p => p.Created).ToList());
         }
 
         // GET: Posts/Details/5
@@ -45,6 +47,7 @@ namespace WestBlog.Controllers
         }
 
         // GET: Posts/Create
+        [Authorize(Roles ="Admin")]
         public ActionResult Create()
         {
             return View();
@@ -53,6 +56,7 @@ namespace WestBlog.Controllers
         // POST: Posts/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Title,Body,MediaURL,Category")] Post post)
@@ -72,6 +76,13 @@ namespace WestBlog.Controllers
                     return View(post);
                 }
 
+                //manually create new object
+                //var post1 = new Post();
+                //run whatever code to check if exists, etc; assign properties through post1.Title, post1.Slug...
+                //then db.TableName.Add(post1)
+                //db.SaveChanges();
+                //will add a new one for each time Create is run
+
                 post.Slug = Slug;
                 post.Created = DateTimeOffset.Now; //.ToString("D");
                 db.Posts.Add(post);
@@ -85,6 +96,7 @@ namespace WestBlog.Controllers
         }
 
         // GET: Posts/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -102,6 +114,7 @@ namespace WestBlog.Controllers
         // POST: Posts/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Created,Updated,Title,Body,MediaURL,Category,Published,Slug")] Post post)
@@ -125,6 +138,7 @@ namespace WestBlog.Controllers
         }
 
         // GET: Posts/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -140,6 +154,7 @@ namespace WestBlog.Controllers
         }
 
         // POST: Posts/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

@@ -9,127 +9,75 @@
     <!-- HERO TEXT -->
     <div class="hero-caption">
         <div class="hero-text hero-t-align">
-            <h1 class="hero-title m-t-70 m-t-zero m-b-0 ">Words from the West</h1>
-            <h3 class="lead m-b-20">chronicling the adventures of an emerging programmer</h3>
+            <h1 class="hero-title m-t-70 m-b-0 ">Words from the West</h1>
+            <h3 class="hero-subtitle m-b-20">chronicling the adventures of an emerging programmer</h3>
         </div>
     </div>
     <!-- /HERO TEXT -->
 
 </section>
 <!-- /HERO -->
-<main>
-    <div class="container">
-
+<main class="container">
         <section class="module module-w">
+            <div class="sidebar pull-right">
+                <aside>
+                    <h6>Categories</h6>
+                    <ul id="filters" class="filters">
+                        <li><a href="#" class="current" data-filter="*">All</a></li>
+                        <li><a href="#" data-filter=".front-end">Front End</a></li>
+                        <li><a href="#" data-filter=".server-side">Server Side</a></li>
+                        <li><a href="#" data-filter=".mvc">MVC</a></li>
+                        <li><a href="#" data-filter=".fun-find">Fun Finds</a></li>
+                    </ul>
+                </aside>
+            </div>
             @{ var i = 0;}
-            <div class="clearfix">
-                       <!-- POST -->
-                
-                        @foreach (var post in Model)
-                        {
-                            if (i % 3 == 0)
-                            {
-                                @:<div class="row">
-                            }
-                        <article class="post col-sm-3">
-                            <div class="post-thumbnail">
-                                <img src="@Html.Raw(post.MediaURL)" alt="">
-                            </div>
-                            <div class="post-header">
-                                <h2 class="post-title"><a href="@Url.Action("Detail", new { slug = post.Slug })">@post.Title</a></h2>
-                                <h4><a href="#">@Html.Raw(post.Category)</a></h4>
-                                <p>@Html.Raw(post.Created.DateTime.ToLongTimeString())</p>
-                            </div>
-                            <div class="post-content preview">
-                                <p>@Html.Raw(post.Body)</p>
-                            </div>
-                            <a class="post-more" href="blog-single.html">Read more &rarr;</a>
-                            <div class="authUser">
-                                @Html.ActionLink("Edit", "Edit", new { id = post.Id }) |
-                                @Html.ActionLink("Details", "Details", new { slug = post.Slug }) |
-                                @Html.ActionLink("Delete", "Delete", new { id = post.Id })
-                            </div>
 
-                        </article>
-                            if (i % 3 == 2)
-                                    {
-                                        @:</div>
-                                    }
-                            i++;
+                <!-- POST -->
+                @foreach (var post in Model)
+                {
+                    if (i % 3 == 0)
+                    {
+                        @:<div class="row">
+                    }
+                <article class="post col-sm-3">
+                    <div class="post-thumbnail">
+                        <img src="@Html.Raw(post.MediaURL)" alt="">
+                    </div>
+                    <div class="post-header">
+                        <h2 class="post-title"><a href="@Url.Action("Detail", new { slug = post.Slug })">@post.Title</a></h2>
+                        <h4><a href="#">@Html.Raw(post.Category)</a></h4>
+                        <p>@Html.Raw(post.Created.DateTime.ToLongTimeString())</p>
+                    </div>
+                    <div class="post-content preview">
+                        <p>@Html.Raw(post.Body)</p>
+                    </div>
+                    <a href="@Url.Action("Details", new { slug = post.Slug })"><span>Read More &rarr;</span></a>
+                    <a class="post-more" href="blog-single.html">Read more &rarr;</a>
+                    <!--Shows {included} only to proper authorization level-->
+                    @if (User.IsInRole("Admin")) //User.Identity.IsAuthenticated for logged in
+                    {                    
+                        <div>
+                            @Html.ActionLink("Edit", "Edit", new { id = post.Id })
+                            @Html.ActionLink("Details", "Details", new { slug = post.Slug })
+                            @Html.ActionLink("Delete", "Delete", new { id = post.Id })
+                        </div>
+                    }
+
+                </article>
+                    if (i % 3 == 2)
+                    {
+                                @:</div>
+                            }
+                        i++;
                         }
-                                        <!-- /POST -->
-                                    </div>
+                   <!-- /POST -->
+
         </section>
 
-                        @*<h2>Index</h2>
+
 
                             <p>
                                 @Html.ActionLink("Create New", "Create")
                             </p>
-                            <table class="table">
-                                <tr>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Created)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Updated)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Title)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Body)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.MediaURL)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Category)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Published)
-                                    </th>
-                                    @*<th>
-                                            @Html.DisplayNameFor(model => model.Slug)
-                                        </th>
-                        <th></th>
-                        </tr>
-
-                        @foreach (var item in Model)
-            {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Created)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Updated)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Title)
-                                </td>
-                                <td>
-                                    @Html.Raw(item.Body)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.MediaURL)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Category)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Published)
-                                </td>
-                                @*<td>
-                                        @Html.DisplayFor(modelItem => item.Slug)
-                                    </td>
-                                <td>
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                                    @Html.ActionLink("Details", "Details", new { slug = item.Slug }) |
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                                </td>
-                            </tr>
-                        }
-
-                        </table>*@
-    </div>
 </main>

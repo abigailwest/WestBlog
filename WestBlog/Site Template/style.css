@@ -818,6 +818,14 @@ p.copyright {
 	color: #fff;
 }
 
+.hero-subtitle {
+    margin:25px 0;
+    line-height:1;
+    font-size:25px;
+    color:#fff;
+    font-weight:100;
+}
+
 @media (max-width: 992px) {
 
 	.hero-title {

@@ -42,7 +42,10 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li>@Html.ActionLink("Blog Home", "Index", "Posts")</li>
                     <li>@Html.ActionLink("About", "About", "Posts")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Posts")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @if (User.IsInRole("Admin")) {
+                        <li>@Html.ActionLink("Admin", "Admin", "Posts")</li>
+                    }
                 </ul>
             </div>
         </div>

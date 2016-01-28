@@ -23,7 +23,7 @@ namespace WestBlog
         public Task SendAsync(IdentityMessage message)
         {
             var username = ConfigurationManager.AppSettings["SendGridUserName"];
-            var password = ConfigurationManager.AppSettings["SendGridUserPassword"];
+            var password = ConfigurationManager.AppSettings["SendGridPassword"];
             var from = ConfigurationManager.AppSettings["ContactEmail"];
 
             SendGridMessage myMessage = new SendGridMessage();

@@ -23,7 +23,7 @@
 
 				$.ajax({
 					type: 'POST',
-					url: 'assets/php/contact.php',
+					url: 'Site Template/contact.php',
 					dataType: 'json',
 					data: {
 						name: name,
