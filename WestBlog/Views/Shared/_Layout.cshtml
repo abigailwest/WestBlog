@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @* Fonts *@
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,400italic,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+</head>
+<body>
+    <!-- PRELOADER -->
+    <div class="page-loader">
+        <div class="loader">Loading...</div>
+    </div>
+    <!-- /PRELOADER -->
+    <!-- NAVIGATION -->
+    <nav class="navbar navbar-fixed-top navbar-custom navbar-transparent">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#custom-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <!-- YOUr LOGO HERE -->
+                <a class="navbar-brand" href="http://awest.azurewebsites.net">
+                    <!-- IMAGE OR SIMPLE TEXT -->
+                    <img class="light-logo" src="~/Images/light-logo-mine.png" width="100" alt="">
+                </a>
+                @*@Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+            </div>
+
+            <div class="collapse navbar-collapse" id="custom-collapse">
+                @Html.Partial("_LoginPartial")
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("Blog Home", "Index", "Posts")</li>
+                    <li>@Html.ActionLink("About", "About", "Posts")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Posts")</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- / NAVIGATION -->
+    @*<div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        <li>@Html.ActionLink("ABC", "Abc", "Home")</li>
+                        <li>@Html.ActionLink("Practice", "Practice", "Home")</li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+        </div>*@
+    <div class="body-content content">
+        @RenderBody()
+        <hr />
+        <footer class="footer module-overlay-dark-3" data-background="assets/images/module-5.jpg">
+            <div class="container">
+                <div class="col-sm-12">
+                    <div class="social-icons text-center m-b-40">
+                        <a href="https://github.com/abigailwest" target="_blank" class="fa fa-github"></a>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="copyright text-center">
+                        © 2016 <a href="#">Abigail West</a>, All Rights Reserved.
+                    </div>
+                </div>
+
+            </div>
+        </footer>
+
+        <!-- SCROLLTOP -->
+        <div class="scroll-up">
+            <a href="#totop"><i class="fa fa-angle-up"></i></a>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+
+</body>
+</html>
