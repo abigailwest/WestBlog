@@ -9,6 +9,7 @@ using WestBlog.Models;
 
 namespace WestBlog.Controllers
 {
+    [RequireHttps]
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -36,13 +37,13 @@ namespace WestBlog.Controllers
         {
             var es = new EmailService();
             var msg = new IdentityMessage();
-            msg.Destination = ConfigurationManager.AppSettings["abigailwwest@gmail.com"];
-            msg.Body = "You have been sent a message from " + contact.Name + "(" + contact.Email + ") with the following contents. \n\n" + contact.Message;
+            msg.Destination = ConfigurationManager.AppSettings["ContactEmail"];
+            msg.Body = "You have been sent a message from " + contact.Name + " (" + contact.Email + ") with the following contents. <br/><br/>\"" + contact.Message + "\"";
             msg.Subject = "Message received through Words from the West";
             es.SendAsync(msg);
 
             //ViewBag.Message = "Your message was sent successfully. Thank you!";
-            return RedirectToAction("Index", "Post");
+            return RedirectToAction("Index", "Posts");
         }
     }
 }

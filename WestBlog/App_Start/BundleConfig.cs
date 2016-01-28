@@ -27,8 +27,8 @@ namespace WestBlog
                          "~/Scripts/wow.min.js", 
                          "~/Scripts/smoothscroll.js",
                          "~/Scripts/submenu-fix.js",
-                         "~/Scripts/contact.js",
-                         "~/Scripts/custom.js"));
+                         "~/Scripts/custom.js",
+                         "~/Scripts/Site.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));

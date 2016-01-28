@@ -41,7 +41,7 @@
                 @Html.Partial("_LoginPartial")
                 <ul class="nav navbar-nav navbar-right">
                     <li>@Html.ActionLink("Blog Home", "Index", "Posts")</li>
-                    <li>@Html.ActionLink("About", "About", "Posts")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     @if (User.IsInRole("Admin")) {
                         <li>@Html.ActionLink("Admin", "Admin", "Posts")</li>
@@ -75,7 +75,6 @@
         </div>*@
     <div class="body-content content">
         @RenderBody()
-        <hr />
         <footer class="footer module-overlay-dark-3" data-background="assets/images/module-5.jpg">
             <div class="container">
                 <div class="col-sm-12">

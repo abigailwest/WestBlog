@@ -3,7 +3,7 @@
 }
 <!-- CONTACT -->
 <section id="contact" class="module-sm module-g">
-    <div class="container">
+    <div class="container view-content">
 
         <!-- MODULE TITLE -->
         <div class="row">
@@ -29,7 +29,7 @@
                     @Html.AntiForgeryToken()
                     <div class="form-group">
                         <label class="sr-only" for="cname">Name</label>
-                        <input type="text" id="cname" class="form-control" name="cname" placeholder="Name" required="" data-validation-required-message="Please enter your name.">
+                        <input type="text" id="cname" class="form-control" name="Name" placeholder="Name" required="" data-validation-required-message="Please enter your name.">
                         <p class="help-block text-danger"></p>
                     </div>
                     <div class="form-group">
@@ -46,9 +46,7 @@
                     </div>
                 </form>
                 <p>@ViewBag.result</p>
-                <!-- Ajax response -->
-                <div id="contact-response" class="ajax-response"></div>
-                <!--<h3 class="module-subtitle">Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of decided to leave.</h3>-->
+               
             </div>
         </div>
         <!-- /MODULE TITLE -->

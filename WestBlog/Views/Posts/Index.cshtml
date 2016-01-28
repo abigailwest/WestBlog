@@ -53,7 +53,6 @@
                         <p>@Html.Raw(post.Body)</p>
                     </div>
                     <a href="@Url.Action("Details", new { slug = post.Slug })"><span>Read More &rarr;</span></a>
-                    <a class="post-more" href="blog-single.html">Read more &rarr;</a>
                     <!--Shows {included} only to proper authorization level-->
                     @if (User.IsInRole("Admin")) //User.Identity.IsAuthenticated for logged in
                     {                    

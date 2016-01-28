@@ -3,6 +3,11 @@ main {
     padding:70px 0;
 }
 
+.view-content {
+    padding-top:75px;
+    padding-bottom:75px;
+}
+
 #hero {
     z-index:3;
 }
@@ -10,6 +15,15 @@ main {
 .content {
     margin-bottom:375px;
     background-color:#fff;
+}
+
+.nav li a {
+    color:#fff;
+    text-shadow:none;
+}
+
+.form-control:focus {
+    color:#000000;
 }
 
 /* -------- SIDEBAR AND FILTERS --------*/

@@ -55,13 +55,13 @@ namespace WestBlog
             //   consumerSecret: "");
 
             //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            //   appId: "1045584822175741",
+            //   appSecret: "40e247bd34f4ec7a0c1127c619af97ed");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
-            //    ClientId = "",
-            //    ClientSecret = ""
+            //    ClientId = "211137990944-gu33fjl4a9dktjjmae4baqolkpgg6038.apps.googleusercontent.com",
+            //    ClientSecret = "Qo_V-nAVEqnaRnOjvTE2RE6J"
             //});
         }
     }

@@ -4,6 +4,101 @@
     ViewBag.Title = "Details";
 }
 
+
+    <section id="hero" class="module-hero module-parallax module-overlay-dark-1" data-background="@Html.Raw(Model.MediaURL)">
+
+        <!-- HERO TEXT -->
+        <div class="hero-caption">
+            <div class="hero-text">
+                <h1 class="hero-title m-t-70">Top 5 Things to Do in Cuba <br> While You Still Can</h1>
+                <p class="lead m-t-40">Posted in <a href="#">Lifestyle</a>, on September 11, 2015</p>
+            </div>
+        </div>
+        <!-- /HERO TEXT -->
+
+    </section>
+    <!-- /HERO -->
+    <!-- JOURNAL -->
+<main class="container view-content">
+    <section id="journal" class="module-sm module-w">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-offset-2">
+                    <article class="post">
+                        <div class="post-content">
+                            <h2>@Html.Raw(Model.Title)</h2>
+                            <!-- Owl-slider start
+                            <div class="owl-carousel slider-images">
+
+                                <div class="owl-item">
+                                    <p><img src="assets/images/module-4.jpg" alt=""></p>
+                                </div>
+
+                                <div class="owl-item">
+                                    <p><img src="assets/images/module-5.jpg" alt=""></p>
+                                </div>
+
+                            </div>
+                            Owl-slider end -->
+
+                        </div>
+
+                        <div class="post-meta">
+                            Tagged <a href="#" rel="tag">London</a>, <a href="#">Paris</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /JOURNAL -->
+    <!-- COMMENTS MODULE -->
+    <section class="module-sm module-g">
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <!-- COMMENTS -->
+                    <div class="comments">
+                        <h4 class="comment-title">3 comments</h4>
+                        <hr class="divider divider-gross m-b-30">
+
+                        <!-- COMMENT 1 -->
+                        <div class="comment clearfix">
+                            <div class="comment-avatar">
+                                <img src="https://s3.amazonaws.com/uifaces/faces/twitter/ryanbattles/128.jpg" alt="">
+                            </div>
+                            <div class="comment-content clearfix">
+                                <h5 class="comment-author">
+                                    <a href="#">John Doe</a>
+                                </h5>
+                                <div class="comment-body">
+                                    <p>The European languages are members of the same family. Their separate existence is a myth. For science, music, sport, etc, Europe uses the same vocabulary. The European languages are members of the same family. Their separate existence is a myth.</p>
+                                </div>
+                                <div class="comment-meta">Today, 14:55 - <a href="#">Reply</a></div>
+                            </div>
+
+                            <!-- COMMENT 2 -->
+                            <div class="comment clearfix">
+                                <div class="comment-avatar">
+                                    <img src="https://s3.amazonaws.com/uifaces/faces/twitter/draganbabic/128.jpg" alt="">
+                                </div>
+                                <div class="comment-content clearfix">
+                                    <h5 class="comment-author">
+                                        <a href="#">Mark Stone</a>
+                                    </h5>
+                                    <div class="comment-body">
+                                        <p>The European languages are members of the same family. Their separate existence is a myth. For science, music, sport, etc, Europe uses the same vocabulary. The European languages are members of the same family. Their separate existence is a myth.</p>
+                                    </div>
+                                    <div class="comment-meta">Today, 14:55 - <a href="#">Reply</a></div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+                            <!-- /COMMENT 2 -->
+</main>
+
 <main class="container">
     <h4>Post</h4>
     <hr />
@@ -73,8 +168,15 @@
         </dd>
 
     </dl>
+    
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-dark btn-round">@Html.ActionLink("Edit", "Edit", new { id = Model.Id })</button>
+                <button type="button" class="btn btn-dark btn-round">@Html.ActionLink("Delete", "Delete", "Posts")</button>
+            </div>
+        }
+    <button type="button" class="btn btn-dark btn-round">@Html.ActionLink("Back to List", "Index")</button>
+    </>
 </main>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+

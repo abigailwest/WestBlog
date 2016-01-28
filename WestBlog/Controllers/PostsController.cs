@@ -12,6 +12,7 @@ using WestBlog.Models;
 namespace WestBlog.Controllers
 {
     //***
+    [RequireHttps]
     public class PostsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
