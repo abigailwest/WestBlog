@@ -3,9 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
 
     @* Fonts *@
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,400italic,700' rel='stylesheet' type='text/css'>
@@ -45,6 +47,7 @@
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     @if (User.IsInRole("Admin")) {
                         <li>@Html.ActionLink("Admin", "Admin", "Posts")</li>
+                        <li>@Html.ActionLink("Create", "Create", "Posts")</li>
                     }
                 </ul>
             </div>

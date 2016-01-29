@@ -17,8 +17,8 @@
 
 </section>
 <!-- /HERO -->
-<main class="container">
-        <section class="module module-w">
+<main class="container view-content">
+        <section>
             <div class="sidebar pull-right">
                 <aside>
                     <h6>Categories</h6>
@@ -47,6 +47,7 @@
                     <div class="post-header">
                         <h2 class="post-title"><a href="@Url.Action("Detail", new { slug = post.Slug })">@post.Title</a></h2>
                         <h4><a href="#">@Html.Raw(post.Category)</a></h4>
+                        <h6>@Html.Raw(post.Created.DateTime.ToLongDateString())</h6>
                         <p>@Html.Raw(post.Created.DateTime.ToLongTimeString())</p>
                     </div>
                     <div class="post-content preview">
@@ -58,7 +59,6 @@
                     {                    
                         <div>
                             @Html.ActionLink("Edit", "Edit", new { id = post.Id })
-                            @Html.ActionLink("Details", "Details", new { slug = post.Slug })
                             @Html.ActionLink("Delete", "Delete", new { id = post.Id })
                         </div>
                     }

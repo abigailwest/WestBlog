@@ -237,6 +237,7 @@
   <ItemGroup>
     <Content Include="Angular\blogConfig.js" />
     <Content Include="Angular\blogCtrlr.js" />
+    <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -246,6 +247,8 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\hero-maroonBells.png" />
+    <Content Include="Images\icon-c.png" />
+    <Content Include="Images\icon-mvc.png" />
     <Content Include="Images\light-logo-mine.png" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />

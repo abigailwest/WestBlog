@@ -760,7 +760,7 @@ p.copyright {
 
 .module.module-g,
 .module-sm.module-g {
-	background-color: #f7f7f7;
+    background-color: #f7f7f7;
 }
 
 .navbar-custom + .wrapper .module:first-child {

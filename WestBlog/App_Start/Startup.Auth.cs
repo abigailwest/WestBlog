@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using WestBlog.Models;
+using Owin.Security.Providers.LinkedIn;
 
 namespace WestBlog
 {
@@ -54,15 +55,17 @@ namespace WestBlog
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "1045584822175741",
-            //   appSecret: "40e247bd34f4ec7a0c1127c619af97ed");
+            app.UseFacebookAuthentication(
+               appId: "1045584822175741",
+               appSecret: "40e247bd34f4ec7a0c1127c619af97ed");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "211137990944-gu33fjl4a9dktjjmae4baqolkpgg6038.apps.googleusercontent.com",
-            //    ClientSecret = "Qo_V-nAVEqnaRnOjvTE2RE6J"
-            //});
+            app.UseLinkedInAuthentication("770eb5hj1aomki", "NXGAiImWlfgT6ttn");
+
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "211137990944-gu33fjl4a9dktjjmae4baqolkpgg6038.apps.googleusercontent.com",
+                ClientSecret = "Qo_V-nAVEqnaRnOjvTE2RE6J"
+            });
         }
     }
 }

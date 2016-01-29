@@ -65,6 +65,11 @@ namespace WestBlog.Models
     public class RegisterViewModel
     {
         [Required]
+        [StringLength(100, ErrorMessage = "Please enter your name.", MinimumLength = 1)]
+        [Display(Name ="Name")]
+        public string Name { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
