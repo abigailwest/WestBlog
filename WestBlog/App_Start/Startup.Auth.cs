@@ -56,15 +56,15 @@ namespace WestBlog
             //   consumerSecret: "");
 
             app.UseFacebookAuthentication(
-               appId: "1045584822175741",
-               appSecret: "40e247bd34f4ec7a0c1127c619af97ed");
+               appId: "FacebookAppId",
+               appSecret: "FacebookSecret");
 
-            app.UseLinkedInAuthentication("770eb5hj1aomki", "NXGAiImWlfgT6ttn");
+            app.UseLinkedInAuthentication("LinkedInAppId", "LinkedInSecret");
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
-                ClientId = "211137990944-gu33fjl4a9dktjjmae4baqolkpgg6038.apps.googleusercontent.com",
-                ClientSecret = "Qo_V-nAVEqnaRnOjvTE2RE6J"
+                ClientId = "GoogleAppId",
+                ClientSecret = "GoogleSecret"
             });
         }
     }

@@ -164,7 +164,8 @@ namespace WestBlog.Controllers
                 //OR replace the entire record, but hide the elements in the form that are not being modified.
                 db.Entry(post).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return View(post);
+                //how to redirect this to the Details page?
             }
             return View(post);
         }

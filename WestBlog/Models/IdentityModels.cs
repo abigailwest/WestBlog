@@ -35,4 +35,5 @@ namespace WestBlog.Models
         public DbSet<Post> Posts { get; set; }  //provides gateway to table to access information, ex:  db.Posts
         public DbSet<Comment> Comments { get; set; }
     }
+
 }
