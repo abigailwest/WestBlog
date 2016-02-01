@@ -54,8 +54,8 @@ namespace WestBlog
                     "~/Site Template/stroke-gap-icons.css",
                     "~/Site Template/superslides.css",
                     "~/Site Template/vertical.min.css",
-                    "~/Content/bootstrap-social.css",
-                    "~/Content/site.css"));
+                    "~/Content/bootstrap-social.css"
+                    ));
         }
     }
 }

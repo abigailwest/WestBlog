@@ -4,7 +4,7 @@
 }
 
 		<!-- HERO -->
-<section id="hero" class="module-hero module-parallax module-overlay-dark-1 js-fullheight" data-background="/Images/hero-maroonBells.png">
+<section id="hero" class="module-hero module-parallax module-overlay-dark-1" data-background="/Images/hero-maroonBells.png">
 
     <!-- HERO TEXT -->
     <div class="hero-caption">
@@ -18,7 +18,7 @@
 </section>
 <!-- /HERO -->
 <main>
-        <section class="container view-content with-hero">
+        <section class="container container-fluid view-content with-hero">
             @*@Html.Raw(Model.FilterClass)*@
             <div class="sidebar pull-right">
                 <aside>
@@ -36,6 +36,9 @@
             @{ var i = 0;}
 
             <div id="works-grid" class="works-grid works-grid-gutter works-grid-dark">
+                @*<h4>Viewing (@Model.Count()) Posts</h4>*@
+
+
                 <!-- POST -->
                 
 
@@ -68,15 +71,13 @@
                             <p>@Html.Raw(post.Body)</p>
                         </div>
                         <div class="post-links">
-                            <a href="@Url.Action("Details", new { slug = post.Slug })"><span>Read More &rarr;</span></a>
                             <!--Shows {included} only to proper authorization level-->
                             @if (User.IsInRole("Admin")) //User.Identity.IsAuthenticated for logged in
                             {
-                                <div>
                                     @Html.ActionLink("Edit", "Edit", new { id = post.Id })
                                     @Html.ActionLink("Delete", "Delete", new { id = post.Id })
-                                </div>
                             }
+                            <a href="@Url.Action("Details", new { slug = post.Slug })"><span>Read More &rarr;</span></a>
                         </div>
                     </article>
                         if (i % 3 == 2)
@@ -90,10 +91,4 @@
             </div>
 
 </section>
-
-
-
-                            <p>
-                                @Html.ActionLink("Create New", "Create")
-                            </p>
 </main>

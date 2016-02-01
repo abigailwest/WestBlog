@@ -20,35 +20,19 @@ namespace WestBlog.Controllers
         // GET: Posts
         public ActionResult Index()
         {
-            //IQueryable<object> notPub = db.Posts.Where(x => x.Published.Equals(false));
-            //List<object> notPublished = new List<object>(notPub);
-            //foreach (Models.Post post in notPublished)
-            //{
-            //    Console.Write(notPublished);
-            //    db.Posts.Remove(post);
-            //}
+            List<Models.Post> AllPosts = new List<Models.Post>(db.Posts);
+            List<Models.Post> ShowablePosts = new List<Models.Post>();
+            for (var i = 0; i < AllPosts.Count; i++)
+            {
+                if (AllPosts[i].Published.Equals(true))
+                {
+                    //System.Diagnostics.Debug.WriteLine("Adding Post at " + i.ToString());
+                    ShowablePosts.Add(AllPosts[i]);
+                }
+            }
 
-            return View(db.Posts.OrderByDescending(p => p.Created).ToList());
+            return View(ShowablePosts.OrderByDescending(p => p.Created).ToList());
         }
-        //public ActionResult Index()
-        //{
-        //    IQueryable<object> notPub = db.Posts.Where(x => x.Published.Equals(false));
-        //    List<object> notPublished = new List<object>(notPub);
-
-        //    foreach (Models.Post post in db.Posts) {
-        //        System.Diagnostics.Debug.WriteLine("Original Posts List: " + post.ToString());
-        //    }
-        //    foreach (Models.Post post in notPublished)
-        //    {
-        //        System.Diagnostics.Debug.WriteLine("Removing Post: " + post.ToString());
-        //        db.Posts.Remove(post);
-        //    }
-
-        //    foreach (Models.Post post in db.Posts)
-        //        System.Diagnostics.Debug.WriteLine("Post Edit Posts Listt: " + post.ToString());
-
-        //    return View(db.Posts.OrderByDescending(p => p.Created).ToList());
-        //}
 
         [Authorize(Roles ="Admin")]  //You can add this above the controller level (at ***) to apply it to all actions in the class
                                      // Can be layered. Ex: [Authorize] (all logged in users) at class level and
