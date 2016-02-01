@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using WestBlog.Models;
+using System.Web.Security;
 
 namespace WestBlog.Controllers
 {
@@ -69,6 +70,14 @@ namespace WestBlog.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            //THROWS AN ERROR: "A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible"
+            //var currentUser = Membership.GetUser("moderator@coderfoundry.com");
+            //if (currentUser.LastPasswordChangedDate == currentUser.CreationDate)
+            //{
+            //    // User has not changed password since created.
+            //    return RedirectToAction("ResetPassword");
+            //}
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -80,7 +89,7 @@ namespace WestBlog.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index", "Posts");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -164,7 +173,7 @@ namespace WestBlog.Controllers
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Posts");
                 }
                 AddErrors(result);
             }
@@ -425,7 +434,7 @@ namespace WestBlog.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Posts");
         }
 
         //

@@ -48,7 +48,6 @@ namespace WestBlog
                     "~/Site Template/style.css",
                     "~/Site Template/bootstrap-theme.min.css",
                     "~/Site Template/animate.css",
-                    "~/Site Template/font-awesome.min.css",
                     "~/Site Template/magnific-popup.css",
                     "~/Site Template/owl.carousel.css",
                     "~/Site Template/simpletextrotator.css",

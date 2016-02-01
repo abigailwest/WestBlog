@@ -20,8 +20,35 @@ namespace WestBlog.Controllers
         // GET: Posts
         public ActionResult Index()
         {
-            return View(db.Posts.OrderByDescending(p=>p.Created).ToList());
+            //IQueryable<object> notPub = db.Posts.Where(x => x.Published.Equals(false));
+            //List<object> notPublished = new List<object>(notPub);
+            //foreach (Models.Post post in notPublished)
+            //{
+            //    Console.Write(notPublished);
+            //    db.Posts.Remove(post);
+            //}
+
+            return View(db.Posts.OrderByDescending(p => p.Created).ToList());
         }
+        //public ActionResult Index()
+        //{
+        //    IQueryable<object> notPub = db.Posts.Where(x => x.Published.Equals(false));
+        //    List<object> notPublished = new List<object>(notPub);
+
+        //    foreach (Models.Post post in db.Posts) {
+        //        System.Diagnostics.Debug.WriteLine("Original Posts List: " + post.ToString());
+        //    }
+        //    foreach (Models.Post post in notPublished)
+        //    {
+        //        System.Diagnostics.Debug.WriteLine("Removing Post: " + post.ToString());
+        //        db.Posts.Remove(post);
+        //    }
+
+        //    foreach (Models.Post post in db.Posts)
+        //        System.Diagnostics.Debug.WriteLine("Post Edit Posts Listt: " + post.ToString());
+
+        //    return View(db.Posts.OrderByDescending(p => p.Created).ToList());
+        //}
 
         [Authorize(Roles ="Admin")]  //You can add this above the controller level (at ***) to apply it to all actions in the class
                                      // Can be layered. Ex: [Authorize] (all logged in users) at class level and
@@ -77,6 +104,26 @@ namespace WestBlog.Controllers
                     return View(post);
                 }
 
+                if (post.Category == "Front End")
+                {
+                    post.FilterClass = "front-end";
+                }
+                else if(post.Category == "Server Side")
+                {
+                    post.FilterClass = "server-side";
+                }
+                else if(post.Category == "MVC")
+                {
+                    post.FilterClass = "mvc";
+                }
+                else if(post.Category == "Fun Finds")
+                {
+                    post.FilterClass = "fun-finds";
+                }
+                else
+                {
+                    post.FilterClass = "none";
+                }
                 //manually create new object
                 //var post1 = new Post();
                 //run whatever code to check if exists, etc; assign properties through post1.Title, post1.Slug...

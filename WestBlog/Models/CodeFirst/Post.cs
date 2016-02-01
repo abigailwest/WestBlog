@@ -26,6 +26,7 @@ namespace WestBlog.Models
         public string Category { get; set; }
         public bool Published { get; set; }
         public string Slug { get; set; }
+        public string FilterClass { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }  //setting navigational properties allows us to access post comments through the post class
                                                 //naming convention to make collection variables plural

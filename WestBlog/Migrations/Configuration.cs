@@ -7,7 +7,7 @@ namespace WestBlog.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
-
+    using System.Web.Security;
     internal sealed class Configuration : DbMigrationsConfiguration<WestBlog.Models.ApplicationDbContext>
     {
         public Configuration()
