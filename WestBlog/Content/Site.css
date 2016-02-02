@@ -215,6 +215,12 @@ article {
     padding-top:50px;
 }
 
+/* ---------- COMMENTS ------------*/
+
+.comment-title {
+    margin:5px 25px;
+}
+
 /* -------- SIDEBAR AND FILTERS --------*/
 
 .sidebar { 

@@ -15,102 +15,118 @@ else
 
 
 
-        <!-- HERO TEXT -->
-        <div class="hero-caption">
-            <div class="hero-text">
-                <h1 class="hero-title m-t-70">@Html.Raw(Model.Title)</h1>
-            </div>
-        </div>
-        <!-- /HERO TEXT -->
+<!-- HERO TEXT -->
+<div class="hero-caption">
+    <div class="hero-text">
+        <h1 class="hero-title m-t-70">@Html.Raw(Model.Title)</h1>
+    </div>
+</div>
+<!-- /HERO TEXT -->
 
-    </section>
-    <!-- /HERO -->
-    <!-- JOURNAL -->
+</section>
+<!-- /HERO -->
+<!-- JOURNAL -->
 <main>
     <section id="journal" class="container container-fluid view-content with-hero">
-            <div class="row">
-                <div class="col-md-8 col-sm-offset-2">
-                    <article class="post">
-                        <div class="post-content">
-                            <h4>@Html.Raw(Model.Created.DateTime.ToLongDateString())</h4>
-                            <h5>@Html.Raw(Model.Created.DateTime.ToShortTimeString())</h5>
-                            @if (Model.Updated.HasValue)
-                            {   <p><i>Updated:</i>@Html.Raw(Model.Updated.Value.DateTime.ToLongDateString())</p>
-                            }
-                            <!-- Owl-slider start
-                            <div class="owl-carousel slider-images">
+        <div class="row">
+            <div class="col-md-8 col-sm-offset-2">
+                <article class="post">
+                    <div class="post-content">
+                        <h4>@Model.Created.DateTime.ToLongDateString()</h4>
+                        <h5>@Model.Created.DateTime.ToShortTimeString()</h5>
+                        @if (Model.Updated.HasValue)
+                        {   <p><i>Updated:</i>@Model.Updated.Value.DateTime.ToLongDateString()</p>
+                        }
+                        <!-- Owl-slider start
+                        <div class="owl-carousel slider-images">
 
-                                <div class="owl-item">
-                                    <p><img src="assets/images/module-4.jpg" alt=""></p>
-                                </div>
-
-                                <div class="owl-item">
-                                    <p><img src="assets/images/module-5.jpg" alt=""></p>
-                                </div>
-
+                            <div class="owl-item">
+                                <p><img src="assets/images/module-4.jpg" alt=""></p>
                             </div>
-                            Owl-slider end -->
-                            <h6 class="category">@Html.Raw(Model.Category)</h6>
-                            <div class="post-body">@Html.Raw(Model.Body)</div>
-                            <div class="row">
-                                <button type="button" class="btn btn-dark btn-round" onclick="location.href='@Url.Action("Index")';return false;">Back to All Posts</button>
-                                @if (User.IsInRole("Admin"))
-                                {
-                                        <button type="button" class="btn btn-dark btn-round" onclick="location.href='@Url.Action("Edit", new { slug = Model.Slug })';return false;">Edit</button>
-                                        <button type="button" class="btn btn-dark btn-round" onclick="location.href='@Url.Action("Delete", new { slug = Model.Slug })';return false;">Delete</button>
-                                }
+
+                            <div class="owl-item">
+                                <p><img src="assets/images/module-5.jpg" alt=""></p>
                             </div>
+
                         </div>
-                    </article>
-                </div>
+                        Owl-slider end -->
+                        <h6 class="category">@Model.Category</h6>
+                        <div class="post-body">@Html.Raw(Model.Body)</div>
+                        <div class="row">
+                            <button type="button" class="btn btn-dark btn-round" onclick="location.href='@Url.Action("Index")';return false;">Back to All Posts</button>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <button type="button" class="btn btn-dark btn-round" onclick="location.href='@Url.Action("Edit", new { slug = Model.Slug })';return false;">Edit</button>
+                                <button type="button" class="btn btn-dark btn-round" onclick="location.href='@Url.Action("Delete", new { slug = Model.Slug })';return false;">Delete</button>
+                            }
+                        </div>
+                    </div>
+                </article>
             </div>
+        </div>
 
     </section>
     <!-- /JOURNAL -->
     <!-- COMMENTS MODULE -->
-    <section class="module-sm module-g">
-            <div class="row">
-                <div class="col-sm-8 col-sm-offset-2">
-                    <!-- COMMENTS -->
-                    <div class="comments">
-                        <h4 class="comment-title">3 comments</h4>
-                        <hr class="divider divider-gross m-b-30">
 
-                        <!-- COMMENT 1 -->
-                        <div class="comment clearfix">
-                            <div class="comment-avatar">
-                                <img src="https://s3.amazonaws.com/uifaces/faces/twitter/ryanbattles/128.jpg" alt="">
-                            </div>
-                            <div class="comment-content clearfix">
-                                <h5 class="comment-author">
-                                    <a href="#">John Doe</a>
-                                </h5>
-                                <div class="comment-body">
-                                    <p>The European languages are members of the same family. Their separate existence is a myth. For science, music, sport, etc, Europe uses the same vocabulary. The European languages are members of the same family. Their separate existence is a myth.</p>
-                                </div>
-                                <div class="comment-meta">Today, 14:55 - <a href="#">Reply</a></div>
-                            </div>
+    <section id="comments" class="module-g">
+        <div class="container container-fluid view-content">
+            <article class="col-sm-10 col-sm-offset-2 comment-form">
+                @if (Model.Comments.Count == 0)
+                {
+                    <h4>There aren't any comments for this post yet.</h4>
+                }
 
-                            <!-- COMMENT 2 -->
-                            <div class="comment clearfix">
-                                <div class="comment-avatar">
-                                    <img src="https://s3.amazonaws.com/uifaces/faces/twitter/draganbabic/128.jpg" alt="">
+                @if (HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+                    if (Model.Comments.Count == 0)
+                    {
+                        <h6>Be the first!</h6>
+                    }
+
+                    <form action="@Url.Action("Create","Comments")" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="PostId" value="@Model.Id" />
+                        <input name="Body" class="comment-input col-sm-10" placeholder="Leave a new comment" />
+                        <button type="submit" class="col-sm-2 btn btn-sm btn-dark btn-round">Submit</button>
+                    </form>
+                }
+                else
+                {
+                    <h4>You must be @Html.ActionLink("logged in", "Login", "Account") to leave a comment. <br />Never signed in before? @Html.ActionLink("Register here.", "Register", "Account")</h4>
+                }
+            </article>
+
+            @if (Model.Comments.Count != 0)
+            {
+                <h6 class="col-sm-11 col-sm-offset-1">Viewing (@Model.Comments.Count) Comments</h6>
+
+                foreach (var comment in Model.Comments)
+                {
+                    <article class="comment col-sm-10 col-sm-offset-2">
+                        <div class="row">
+                            <h4 class="col-sm-3"><b>@comment.Author.DisplayName</b> says...</h4>
+                            @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                            {
+                                <div class="col-sm-9">
+                                    @Html.ActionLink("Edit", "Edit", "Comments")
+                                    @Html.ActionLink("Delete", "Delete", "Comments")
                                 </div>
-                                <div class="comment-content clearfix">
-                                    <h5 class="comment-author">
-                                        <a href="#">Mark Stone</a>
-                                    </h5>
-                                    <div class="comment-body">
-                                        <p>The European languages are members of the same family. Their separate existence is a myth. For science, music, sport, etc, Europe uses the same vocabulary. The European languages are members of the same family. Their separate existence is a myth.</p>
-                                    </div>
-                                    <div class="comment-meta">Today, 14:55 - <a href="#">Reply</a></div>
-                                </div>
-                            </div>
-                            </div>
+                            }
                         </div>
-                    </div>
-                </div>
-            </section>
-                            <!-- /COMMENT 2 -->
+                        <div class="comment-body">
+                            <p>@Html.Raw(comment.Body)</p>
+                        </div>
+                        <div class="comment-meta">
+                            @comment.Created.DateTime.ToLongDateString(), @comment.Created.DateTime.ToShortTimeString()
+                            @* add Reply option? *@
+                        </div>
+
+                    </article>
+                }
+            }
+
+        </div>
+    </section>
 </main>
 

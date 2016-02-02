@@ -49,7 +49,7 @@ namespace WestBlog.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Post post = db.Posts.FirstOrDefault(p=>p.Slug == slug);
+            Post post = db.Posts.Include("Comments").FirstOrDefault(p=>p.Slug == slug);
             if (post == null)
             {
                 return HttpNotFound();
@@ -121,9 +121,7 @@ namespace WestBlog.Controllers
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
-            }
-            
-
+            }           
             return View(post);
         }
 
@@ -154,7 +152,7 @@ namespace WestBlog.Controllers
             if (ModelState.IsValid)
             {
                 post.Updated = System.DateTimeOffset.Now;
-                //TO PREVENT NULLS BEING INSERTE FOR NON-MODIFIED VALUES, either:
+                //TO PREVENT NULLS BEING INSERTED FOR NON-MODIFIED VALUES, either:
 
                 //Set each modified property to true and save changes:
                 //db.Posts.Attach(post);
@@ -164,11 +162,11 @@ namespace WestBlog.Controllers
                 //OR replace the entire record, but hide the elements in the form that are not being modified.
                 db.Entry(post).State = EntityState.Modified;
                 db.SaveChanges();
-                return View(post);
-                //how to redirect this to the Details page?
+                return RedirectToAction("Details", "Posts", new { slug = post.Slug });
             }
-            return View(post);
+            return View(post); 
         }
+
 
         // GET: Posts/Delete/5
         [Authorize(Roles = "Admin")]

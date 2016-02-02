@@ -12,6 +12,8 @@ namespace WestBlog.Models
         public int Id { get; set; }
         public int PostId { get; set; }
         public string AuthorId { get; set; }
+        [Required]
+        [StringLength(750, ErrorMessage = "The maximum length is 750 characters.", MinimumLength =1)]
         public string Body { get; set; }
         public DateTimeOffset Created { get; set; }
 
