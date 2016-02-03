@@ -109,8 +109,8 @@ else
                             @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
                             {
                                 <div class="col-sm-9">
-                                    @Html.ActionLink("Edit", "Edit", "Comments")
-                                    @Html.ActionLink("Delete", "Delete", "Comments")
+                                    @Html.ActionLink("Edit", "Edit", "Comments", new { id = comment.Id}, null)
+                                    @Html.ActionLink("Delete", "Delete", "Comments", new { id = comment.Id }, null)
                                 </div>
                             }
                         </div>

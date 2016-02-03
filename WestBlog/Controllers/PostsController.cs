@@ -189,6 +189,7 @@ namespace WestBlog.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
+            //The ActionResult has a different name here because we can only have one action with a certain parameter (here, id). By assigning the action name in the HttpPost, we keep the same URL action name but call a different function.
         {
             Post post = db.Posts.Find(id);
             db.Posts.Remove(post);

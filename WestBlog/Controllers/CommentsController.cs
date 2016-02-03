@@ -33,6 +33,7 @@ namespace WestBlog.Controllers
             {
                 comment.Created = DateTimeOffset.Now;
                 comment.AuthorId = User.Identity.GetUserId();
+                comment.OriginalBody = comment.Body;
 
                 db.Comments.Add(comment);
                 db.SaveChanges();
@@ -44,7 +45,7 @@ namespace WestBlog.Controllers
 
         //GET: Comments/Edit/5
         [Authorize(Roles ="Admin, Moderator")]
-        public ActionResult Edit (int? id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -52,6 +53,7 @@ namespace WestBlog.Controllers
                     (HttpStatusCode.BadRequest);
             }
             Comment comment = db.Comments.Find(id);
+            TempData["prevComment"] = comment.Body; //allows communication between controllers
             if (comment == null)
             {
                 return HttpNotFound();
@@ -65,13 +67,59 @@ namespace WestBlog.Controllers
         public ActionResult Edit([Bind(Include = "Id, PostId, AuthorId, Body, Created")]Comment comment)
         {
             var slug = db.Posts.Find(comment.PostId).Slug;
+            var previous = TempData["prevComment"].ToString();
+            //cannot have two instances of comment.Property, so must use TempData (hack version) to access older variables (see GET Edit)
+
             if (ModelState.IsValid)
             {
+                comment.Modified = DateTimeOffset.Now;
+                comment.ModifiedBy = User.Identity.GetUserName();
+                comment.PreviousBody = previous;
+
                 db.Entry(comment).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Details", "Posts", new { slug = slug });
             }
             return View(comment);
+        }
+
+        //GET: Comments/Delete/5
+        [Authorize(Roles ="Admin, Moderator")]
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Comment comment = db.Comments.Find(id);
+            if(comment == null)
+            {
+                return HttpNotFound();
+            }
+            return View(comment);
+        }
+
+        //POST: Comments/Delete/5
+        [Authorize(Roles ="Admin, Moderator")]
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Comment comment = db.Comments.Find(id);
+            var slug = db.Posts.Find(comment.PostId).Slug;
+
+            db.Comments.Remove(comment);
+            db.SaveChanges();
+            return RedirectToAction("Details", "Posts", new { slug = slug });
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
 
 

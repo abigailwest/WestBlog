@@ -1,0 +1,88 @@
+﻿@model WestBlog.Models.Comment
+@{
+    ViewBag.Title = "Edit";
+}
+
+<main>
+    <section class="container view-content">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4>Editing Comment for: <b>@Model.Post.Title</b></h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model=>model.PostId)
+                @Html.HiddenFor(model=>model.AuthorId)
+                @Html.HiddenFor(model=>model.Created)
+                <dl class="col-sm-5">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Author)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model=>model.Author.DisplayName)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Created)
+                    </dt>
+                    <dd>
+                    @Model.Created.DateTime.ToString("ddd, MMM dd, yyyy: HH:mm")
+                    </dd>
+                    @if (Model.Modified.HasValue)
+                    {
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Modified)
+                        </dt>
+                        <dd>
+                            @Model.Modified.Value.DateTime.ToString("ddd, MMM dd, yyyy: HH:mm")
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.ModifiedBy)
+                        </dt>
+                        <dd>
+                            @Model.ModifiedBy
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.OriginalBody)
+                        </dt>
+                        <dd>
+                            @Html.Raw(Model.OriginalBody)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model=>model.PreviousBody)
+                        </dt>
+                        <dd>
+                            @Html.Raw(Model.PreviousBody)
+                        </dd>
+                    }
+                </dl>
+                <div class="form-group col-sm-7">
+                    <div>
+                        @Html.LabelFor(model => model.Body, htmlAttributes: new { @class = "control-label col-sm-2" })
+                        @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-sm-10">
+                        @Html.EditorFor(model => model.Body, new { htmlAttributes = new { @class = "form-control", rows = "5", id = "editor" } })
+                        @Html.ValidationMessageFor(model=>model.Body, "", new { @class = "text-danger" })
+                        <br />
+                        <div class="form-group">
+                            <div class="verify-contain col-sm-12">
+                                <button type="button" id="edit" class="btn btn-dark btn-round">Save</button>
+                                <div id="verify">
+                                    <p class="text-danger">Are you sure you want to permanently modify this comment?</p>
+                                    <input type="submit" value="Yes, modify" class="btn btn-dark btn-round pull-right" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                @Html.ActionLink("Back to Post", "Details", "Posts", new { slug = Model.Post.Slug }, null)
+            </div>
+        }
+    </section>
+</main>
+

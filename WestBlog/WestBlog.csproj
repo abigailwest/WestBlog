@@ -562,11 +562,13 @@
     <Content Include="Views\Account\ConfirmationSent.cshtml" />
     <Content Include="Views\Posts\Admin.cshtml" />
     <Content Include="Site Template\contact.php" />
+    <Content Include="Views\Comments\Edit.cshtml" />
+    <Content Include="Views\Comments\Delete.cshtml" />
+    <Content Include="Views\Comments\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\thumbs\" />
-    <Folder Include="Views\Comments\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

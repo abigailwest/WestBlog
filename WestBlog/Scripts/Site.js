@@ -5,6 +5,7 @@
         $(this).css('color', '#222');
     }
 
+    $('#edit').click(verifySubmit);
     $('#create').click(verifySubmit);
     $('#delete').click(verifySubmit);
     function verifySubmit() {
