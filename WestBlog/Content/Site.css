@@ -54,8 +54,6 @@ dd {
     padding:0 0 10px;
 }
 
-input
-
 
 /* --------------- IMAGES -------------------*/
 
@@ -132,6 +130,15 @@ p.text-danger {
 
 .break {
     word-break:break-all;
+}
+
+.header p {
+    font-size:1em;
+    font-weight:bold;
+}
+
+.col-thin {
+    padding:0 5px!important;
 }
 
 /* --------------------- POSTS DISPLAY -------------------*/
@@ -225,6 +232,21 @@ article {
 
 .comment-title {
     margin:5px 25px;
+}
+
+#editor-body {
+    word-break:break-word;
+    height:250px;
+}
+
+#comment-input {
+    word-break:break-word;
+    height:75px;
+    margin:0 15px 50px 0;
+}
+
+.comment-submit {
+    margin:0 0 30px;
 }
 
 /* -------- SIDEBAR AND FILTERS --------*/

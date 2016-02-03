@@ -69,17 +69,17 @@ else
     <!-- /JOURNAL -->
     <!-- COMMENTS MODULE -->
 
-    <section id="comments" class="module-g">
+    <section id="comments" class="back-g">
         <div class="container container-fluid view-content">
             <article class="col-sm-10 col-sm-offset-2 comment-form">
-                @if (Model.Comments.Count == 0)
+                @if (Model.Comments.Where(c=>c.Published==true).Count() == 0)
                 {
                     <h4>There aren't any comments for this post yet.</h4>
                 }
 
                 @if (HttpContext.Current.User.Identity.IsAuthenticated)
                 {
-                    if (Model.Comments.Count == 0)
+                    if (Model.Comments.Where(c=>c.Published==true).Count() == 0)
                     {
                         <h6>Be the first!</h6>
                     }
@@ -87,8 +87,8 @@ else
                     <form action="@Url.Action("Create","Comments")" method="post">
                         @Html.AntiForgeryToken()
                         <input type="hidden" name="PostId" value="@Model.Id" />
-                        <input name="Body" class="comment-input col-sm-10" placeholder="Leave a new comment" />
-                        <button type="submit" class="col-sm-2 btn btn-sm btn-dark btn-round">Submit</button>
+                        <input name="Body" id="comment-input" class="comment-input col-sm-8 col-sm-offset-1" placeholder="Leave a new comment" />
+                        <div class="col-sm-2"><button type="submit" class="comment-submit btn btn-sm btn-dark btn-round">Submit</button></div>
                     </form>
                 }
                 else
@@ -97,13 +97,12 @@ else
                 }
             </article>
 
-            @if (Model.Comments.Count != 0)
-            {
-                <h6 class="col-sm-11 col-sm-offset-1">Viewing (@Model.Comments.Count) Comments</h6>
-
+            @if (Model.Comments.Where(c=>c.Published== true).Count() != 0)
+                        {
+                <h6 class="col-sm-11 col-sm-offset-1">Viewing (@Model.Comments.Where(c=>c.Published== true).Count()) Comments</h6>
                 foreach (var comment in Model.Comments)
                 {
-                    <article class="comment col-sm-10 col-sm-offset-2">
+                    <article class="comment col-sm-9 col-sm-offset-2">
                         <div class="row">
                             <h4 class="col-sm-3"><b>@comment.Author.DisplayName</b> says...</h4>
                             @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
@@ -115,7 +114,15 @@ else
                             }
                         </div>
                         <div class="comment-body">
-                            <p>@Html.Raw(comment.Body)</p>
+                            @if (comment.Published == true)
+                            {
+                                <p>@Html.Raw(comment.Body)</p>
+                            }
+                            else
+                            {
+                                <p class="text-danger">This comment was removed because: @comment.ReasonRemoved</p>
+                            }
+
                         </div>
                         <div class="comment-meta">
                             @comment.Created.DateTime.ToLongDateString(), @comment.Created.DateTime.ToShortTimeString()

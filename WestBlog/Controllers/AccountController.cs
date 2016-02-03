@@ -161,7 +161,7 @@ namespace WestBlog.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, DisplayName=model.Name};
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, DisplayName=model.DisplayName};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -375,7 +375,7 @@ namespace WestBlog.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index", "Posts", null);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -417,7 +417,7 @@ namespace WestBlog.Controllers
                     if (result.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        return RedirectToLocal(returnUrl);
+                        return RedirectToAction("Index", "Posts", null);
                     }
                 }
                 AddErrors(result);

@@ -22,6 +22,9 @@ namespace WestBlog.Models
         [Display(Name ="Original Comment")]
         public string OriginalBody { get; set; }
         public string PreviousBody { get; set; }
+        public bool Published { get; set; }
+        [StringLength(500, ErrorMessage = "You must enter a reason to remove this comment.", MinimumLength =5)]
+        public string ReasonRemoved { get; set; }
 
         public virtual ApplicationUser Author { get; set; }
         public virtual Post Post { get; set; }

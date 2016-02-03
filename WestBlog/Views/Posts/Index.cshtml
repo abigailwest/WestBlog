@@ -41,13 +41,12 @@
                 
 
 
-                @foreach (var post in Model)
+                @foreach (var post in Model.Where(p=>p.Published==true))
                 {
                     if (i % 3 == 0)
                     { 
                         @:<div class="row">
                             }
-                    @*@(post.Published?"":"hide")*@
                     <article class="post post-preview col-sm-3 @Html.Raw(post.FilterClass)">
                         <div class="post-thumbnail">
                             @if (post.MediaURL.IsEmpty())

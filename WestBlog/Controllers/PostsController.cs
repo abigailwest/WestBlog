@@ -20,18 +20,20 @@ namespace WestBlog.Controllers
         // GET: Posts
         public ActionResult Index()
         {
-            List<Models.Post> AllPosts = new List<Models.Post>(db.Posts);
-            List<Models.Post> ShowablePosts = new List<Models.Post>();
-            for (var i = 0; i < AllPosts.Count; i++)
-            {
-                if (AllPosts[i].Published.Equals(true))
-                {
-                    //System.Diagnostics.Debug.WriteLine("Adding Post at " + i.ToString());
-                    ShowablePosts.Add(AllPosts[i]);
-                }
-            }
+            //This was my complicated way of doing .Where(p=>p.Published==true)
 
-            return View(ShowablePosts.OrderByDescending(p => p.Created).ToList());
+            //List<Models.Post> AllPosts = new List<Models.Post>(db.Posts);
+            //List<Models.Post> PublishedPosts = new List<Models.Post>();
+            //for (var i = 0; i < AllPosts.Count; i++)
+            //{
+            //    if (AllPosts[i].Published.Equals(true))
+            //    {
+            //        //System.Diagnostics.Debug.WriteLine("Adding Post at " + i.ToString());
+            //        PublishedPosts.Add(AllPosts[i]);
+            //    }
+            //}
+
+            return View(db.Posts.OrderByDescending(p => p.Created).ToList());
         }
 
         [Authorize(Roles ="Admin")]  //You can add this above the controller level (at ***) to apply it to all actions in the class
@@ -49,12 +51,23 @@ namespace WestBlog.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            List<Models.Comment> AllComments = new List<Models.Comment>(db.Comments);
+            List<Models.Comment> PublishedComments = new List<Models.Comment>();
+            for (var i = 0;i< AllComments.Count;i++)
+            {
+                if (AllComments[i].Published.Equals(true))
+                {
+                    PublishedComments.Add(AllComments[i]);
+                }
+                System.Diagnostics.Debug.WriteLine(PublishedComments);
+            }
+
             Post post = db.Posts.Include("Comments").FirstOrDefault(p=>p.Slug == slug);
             if (post == null)
             {
                 return HttpNotFound();
             }
-
             return View(post);
         }
 

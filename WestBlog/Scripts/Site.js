@@ -12,4 +12,11 @@
         $('#verify').show();
     }
 
+    $("#publish-check").change(function(){
+        var ischeck = $(this).is(':checked');
+        if (!ischecked){
+            $('#reasonRemoved').show();
+        }
+    })
+
 });

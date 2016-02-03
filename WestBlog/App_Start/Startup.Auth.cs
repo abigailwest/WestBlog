@@ -7,6 +7,7 @@ using Microsoft.Owin.Security.Google;
 using Owin;
 using WestBlog.Models;
 using Owin.Security.Providers.LinkedIn;
+using System.Configuration;
 
 namespace WestBlog
 {
@@ -56,15 +57,15 @@ namespace WestBlog
             //   consumerSecret: "");
 
             app.UseFacebookAuthentication(
-               appId: "FacebookAppId",
-               appSecret: "FacebookSecret");
+               appId: ConfigurationManager.AppSettings["FacebookAppId"],
+               appSecret: ConfigurationManager.AppSettings["FacebookSecret"]);
 
-            app.UseLinkedInAuthentication("LinkedInAppId", "LinkedInSecret");
+            app.UseLinkedInAuthentication(ConfigurationManager.AppSettings["LinkedInAppId"], ConfigurationManager.AppSettings["LinkedInSecret"]);
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
-                ClientId = "GoogleAppId",
-                ClientSecret = "GoogleSecret"
+                ClientId = ConfigurationManager.AppSettings["GoogleAppId"],
+                ClientSecret = ConfigurationManager.AppSettings["GoogleSecret"]
             });
         }
     }

@@ -8,6 +8,7 @@ namespace WestBlog.Models
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
     }
 
     public class ExternalLoginListViewModel
@@ -66,8 +67,8 @@ namespace WestBlog.Models
     {
         [Required]
         [StringLength(100, ErrorMessage = "Please enter your name.", MinimumLength = 2)]
-        [Display(Name ="Name")]
-        public string Name { get; set; }
+        [Display(Name ="Display Name")]
+        public string DisplayName { get; set; }
 
         [Required]
         [EmailAddress]

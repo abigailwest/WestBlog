@@ -34,6 +34,7 @@ namespace WestBlog.Controllers
                 comment.Created = DateTimeOffset.Now;
                 comment.AuthorId = User.Identity.GetUserId();
                 comment.OriginalBody = comment.Body;
+                comment.Published = true;
 
                 db.Comments.Add(comment);
                 db.SaveChanges();
@@ -64,7 +65,7 @@ namespace WestBlog.Controllers
         [Authorize(Roles = "Admin, Moderator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id, PostId, AuthorId, Body, Created")]Comment comment)
+        public ActionResult Edit([Bind(Include = "Id, PostId, AuthorId, Body, Created, Modified, ModifiedBy, OriginalBody, PreviousBody, Published, ReasonRemoved")]Comment comment)
         {
             var slug = db.Posts.Find(comment.PostId).Slug;
             var previous = TempData["prevComment"].ToString();
@@ -78,6 +79,14 @@ namespace WestBlog.Controllers
 
                 db.Entry(comment).State = EntityState.Modified;
                 db.SaveChanges();
+                //if (Submit == "Save and go to moderator page.")
+                //{
+                //    return RedirectToAction("Index");
+                //}
+                //else if(Submit == "Save and go to post.")
+                //{
+                //    return RedirectToAction("Details", "Posts", new { slug = slug });
+                //}
                 return RedirectToAction("Details", "Posts", new { slug = slug });
             }
             return View(comment);
