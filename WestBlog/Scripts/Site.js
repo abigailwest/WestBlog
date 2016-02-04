@@ -13,10 +13,17 @@
     }
 
     $("#publish-check").change(function(){
-        var ischeck = $(this).is(':checked');
-        if (!ischecked){
+        if (!$(this).is(':checked')) {
             $('#reasonRemoved').show();
         }
     })
+
+    $("#media-check").change(function(){
+        if ($(this).is(":checked")) {
+            $("#media-change").show();
+            $("#media-same").remove();
+        }
+    })
+
 
 });

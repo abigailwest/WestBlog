@@ -85,6 +85,17 @@ namespace WestBlog.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
+            var user = await UserManager.FindByNameAsync(model.Email);
+            if (user != null)
+            {
+                if (!await UserManager.IsEmailConfirmedAsync(user.Id))
+                {
+                    string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
+                    ViewBag.errorMessage = "You must have a confirmed email to log in. The confirmation link has been resent to your email account.";
+                    return View("Error");
+                }
+            }
+
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
@@ -165,15 +176,24 @@ namespace WestBlog.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account");
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Posts");
+
+                    //string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account with Words from the West by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    //Uncomment to debug locally
+                    //TempData["ViewBagLink"] = callbackUrl;
+
+                    ViewBag.Message = "Check your email to confirm your account. You must confirm your address before you log in.";
+
+                    return View("Info");
+
+                    //return RedirectToAction("Index", "Posts");
                 }
                 AddErrors(result);
             }
@@ -409,7 +429,7 @@ namespace WestBlog.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, DisplayName = model.DisplayName };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -521,6 +541,15 @@ namespace WestBlog.Controllers
                 }
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
+        }
+        
+        private async Task<string> SendEmailConfirmationTokenAsync(string userID, string subject)
+        {
+            string code = await UserManager.GenerateEmailConfirmationTokenAsync(userID);
+            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = userID, code = code }, protocol: Request.Url.Scheme);
+            await UserManager.SendEmailAsync(userID, subject, "Please confirm your account with Words from the West by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+            return callbackUrl;
         }
         #endregion
     }

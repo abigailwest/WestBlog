@@ -61,11 +61,12 @@ namespace WestBlog.Controllers
             }
             return View(comment);
         }
+
         //POST: Comments/Edit/5
         [Authorize(Roles = "Admin, Moderator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id, PostId, AuthorId, Body, Created, Modified, ModifiedBy, OriginalBody, PreviousBody, Published, ReasonRemoved")]Comment comment)
+        public ActionResult Edit([Bind(Include = "Id, PostId, AuthorId, Body, Created, Modified, ModifiedBy, OriginalBody, PreviousBody, Published, ReasonRemoved")]Comment comment, string Submit)
         {
             var slug = db.Posts.Find(comment.PostId).Slug;
             var previous = TempData["prevComment"].ToString();
@@ -79,15 +80,15 @@ namespace WestBlog.Controllers
 
                 db.Entry(comment).State = EntityState.Modified;
                 db.SaveChanges();
-                //if (Submit == "Save and go to moderator page.")
-                //{
-                //    return RedirectToAction("Index");
-                //}
-                //else if(Submit == "Save and go to post.")
-                //{
-                //    return RedirectToAction("Details", "Posts", new { slug = slug });
-                //}
-                return RedirectToAction("Details", "Posts", new { slug = slug });
+                if (Submit == "Save and go to moderator page")
+                {
+                    return RedirectToAction("Index");
+                }
+                else if (Submit == "Save and go to post")
+                {
+                    return RedirectToAction("Details", "Posts", new { slug = slug });
+                }
+                //could also use switch statement
             }
             return View(comment);
         }

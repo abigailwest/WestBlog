@@ -4,13 +4,14 @@
     ViewBag.Title = "Details";
 }
 
-@if (Model.MediaURL.IsEmpty())
+@if (Model.MediaURL == null)
 {
     @:<section id="hero" class="module-hero module-parallax module-overlay-dark-1" data-background="../Images/hero-maroonBells.png">
 }
 else
 {
-    @:<section id="hero" class="module-hero module-parallax module-overlay-dark-1" data-background="@Html.Raw(Model.MediaURL)">
+   
+    @:<section id="hero" class="module-hero module-parallax module-overlay-dark-1" data-background=@Url.Content(Model.MediaURL)>
 }
 
 
@@ -55,9 +56,9 @@ else
                         <div class="row">
                             <button type="button" class="btn btn-dark btn-round" onclick="location.href='@Url.Action("Index")';return false;">Back to All Posts</button>
                             @if (User.IsInRole("Admin"))
-                            {
-                                <button type="button" class="btn btn-dark btn-round" onclick="location.href='@Url.Action("Edit", new { slug = Model.Slug })';return false;">Edit</button>
-                                <button type="button" class="btn btn-dark btn-round" onclick="location.href='@Url.Action("Delete", new { slug = Model.Slug })';return false;">Delete</button>
+                            { 
+                                <button type="button" class="btn btn-dark btn-round" onclick="location.href='@Url.Action("Edit", new { id = Model.Id })';return false;">Edit</button>
+                                <button type="button" class="btn btn-dark btn-round" onclick="location.href='@Url.Action("Delete", new { id = Model.Id })';return false;">Delete</button>
                             }
                         </div>
                     </div>
@@ -72,14 +73,14 @@ else
     <section id="comments" class="back-g">
         <div class="container container-fluid view-content">
             <article class="col-sm-10 col-sm-offset-2 comment-form">
-                @if (Model.Comments.Where(c=>c.Published==true).Count() == 0)
+                @if (Model.Comments.Count == 0)
                 {
                     <h4>There aren't any comments for this post yet.</h4>
                 }
 
                 @if (HttpContext.Current.User.Identity.IsAuthenticated)
                 {
-                    if (Model.Comments.Where(c=>c.Published==true).Count() == 0)
+                    if (Model.Comments.Count == 0)
                     {
                         <h6>Be the first!</h6>
                     }
@@ -97,14 +98,14 @@ else
                 }
             </article>
 
-            @if (Model.Comments.Where(c=>c.Published== true).Count() != 0)
+            @if (Model.Comments.Count != 0)
                         {
-                <h6 class="col-sm-11 col-sm-offset-1">Viewing (@Model.Comments.Where(c=>c.Published== true).Count()) Comments</h6>
+                <h6 class="col-sm-11 col-sm-offset-1">Viewing (@Model.Comments.Count) Comments</h6>
                 foreach (var comment in Model.Comments)
                 {
                     <article class="comment col-sm-9 col-sm-offset-2">
                         <div class="row">
-                            <h4 class="col-sm-3"><b>@comment.Author.DisplayName</b> says...</h4>
+                            <h4 class="col-sm-3"><b>@comment.Author.DisplayName </b> says...</h4>
                             @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
                             {
                                 <div class="col-sm-9">
@@ -128,6 +129,7 @@ else
                             @comment.Created.DateTime.ToLongDateString(), @comment.Created.DateTime.ToShortTimeString()
                             @* add Reply option? *@
                         </div>
+                        <hr />
 
                     </article>
                 }

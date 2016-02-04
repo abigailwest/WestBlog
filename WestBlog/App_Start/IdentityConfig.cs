@@ -15,12 +15,17 @@ using System.Configuration;
 using SendGrid;
 using System.Net.Mail;
 using System.Net;
+using System.Diagnostics;
 
 namespace WestBlog
 {
     public class EmailService : IIdentityMessageService
     {
-        public Task SendAsync(IdentityMessage message)
+        public async Task SendAsync(IdentityMessage message)
+        {
+            await configSendGridasync(message);
+        }
+        private async Task configSendGridasync(IdentityMessage message)
         {
             var username = ConfigurationManager.AppSettings["SendGridUserName"];
             var password = ConfigurationManager.AppSettings["SendGridPassword"];
@@ -38,9 +43,17 @@ namespace WestBlog
 
             var transportWeb = new Web(credentials);
 
-            transportWeb.DeliverAsync(myMessage);
+            if (transportWeb != null)
+            {
+                await transportWeb.DeliverAsync(myMessage);
+            }
+            else
+            {
+                Trace.TraceError("Failed to create Web transport.");
+                await Task.FromResult(0);
+            }
 
-            return Task.FromResult(0);
+            //return Task.FromResult(0);
         }
     }
 

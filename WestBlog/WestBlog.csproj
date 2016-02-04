@@ -89,6 +89,14 @@
       <HintPath>..\packages\Owin.Security.Providers.1.26\lib\net45\Owin.Security.Providers.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="SendGrid, Version=6.3.4.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
       <HintPath>..\packages\Sendgrid.6.3.4\lib\SendGrid.dll</HintPath>
       <Private>True</Private>
@@ -229,6 +237,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CodeFirst\Comment.cs" />
     <Compile Include="Models\CodeFirst\ContactMessage.cs" />
+    <Compile Include="Models\CodeFirst\ImageUploadValidator.cs" />
     <Compile Include="Models\CodeFirst\Post.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -242,10 +251,12 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\hamm-spoon.jpg" />
     <Content Include="Images\hero-maroonBells.png" />
     <Content Include="Images\icon-c.png" />
     <Content Include="Images\icon-mvc.png" />
@@ -565,6 +576,7 @@
     <Content Include="Views\Comments\Edit.cshtml" />
     <Content Include="Views\Comments\Delete.cshtml" />
     <Content Include="Views\Comments\Index.cshtml" />
+    <Content Include="Views\Shared\Info.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

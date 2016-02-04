@@ -7,9 +7,7 @@
     <section class="container container-fluid view-content">
         <h2>Index</h2>
 
-        <p>
-            @Html.ActionLink("Create New", "Create")
-        </p>
+        <a class="btn btn-round btn-dark" href="@Url.Action("Create", "Create")">Create New</a>
         <div class="row header">
             <div class="col-sm-1">
                 <h4>@Html.DisplayNameFor(model => model.Title)</h4>
@@ -50,7 +48,7 @@
                     @Html.Raw(post.Body)
                 </div>
                 <div class="col-sm-1">
-                    @Html.DisplayFor(modelpost => post.Created)
+                    @Html.DisplayFor(modelItem => post.Created)
                 </div>
                 <div class="col-sm-1 break">
                             @if (post.Updated.HasValue)

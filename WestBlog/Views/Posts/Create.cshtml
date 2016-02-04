@@ -7,7 +7,7 @@
     <section class="container view-content">
         <h2>Create New Post</h2>
         <hr />
-        @using (Html.BeginForm())
+        @using (Html.BeginForm("Create", "Posts", FormMethod.Post, new { enctype = "Multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
 
@@ -34,50 +34,9 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.MediaURL, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-@*
-    @{
-        WebImage photo = null;
-        var newFileName = "";
-        var imagePath = "";
-        var imageThumbPath = "";
 
-        if (IsPost)
-        {
-            photo = WebImage.GetImageFromRequest();
-            if (photo != null)
-            {
-                newFileName = Guid.NewGuid().ToString() + "_" +
-                    Path.GetFileName(photo.FileName);
-                imagePath = @"images\" + newFileName;
-                photo.Save(@"~\" + imagePath);
-
-                imageThumbPath = @"images\thumbs\" + newFileName;
-                photo.Resize(width: 60, height: 60, preserveAspectRatio: true,
-                   preventEnlarge: true);
-                photo.Save(@"~\" + imageThumbPath);
-            }
-        }
-    }
-
-    <form action="" method="post" enctype="multipart/form-data">
-        <fieldset>
-            <legend> Upload Image </legend>
-            <label for="Image">Image</label>
-            <input type="file" name="Image" />
-            <br />
-            <input type="submit" name="mediaUrl" value="Upload" />
-        </fieldset>
-    </form>
-    <h1>Uploaded Image</h1>
-    @if (imagePath != "")
-    {
-        <div class="result">
-            <img src="@imagePath" alt="image" />
-
-        </div>
-    }*@
-
-                        @Html.EditorFor(model => model.MediaURL, new { htmlAttributes = new { @class = "form-control" } })
+                        @*@Html.EditorFor(model => model.MediaURL, new { htmlAttributes = new { @class = "form-control" } })*@
+                        <input name="image" type="file" class="form-control" id="fileUpload" />
                         @Html.ValidationMessageFor(model => model.MediaURL, "", new { @class = "text-danger" })
                     </div>
                 </div>

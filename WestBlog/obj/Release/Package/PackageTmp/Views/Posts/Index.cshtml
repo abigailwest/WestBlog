@@ -1,4 +1,7 @@
-﻿@model IEnumerable<WestBlog.Models.Post>
+﻿@model IPagedList<WestBlog.Models.Post>
+@using PagedList;
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewBag.Title = "Index";
 }
@@ -34,8 +37,6 @@
                 </aside>
             </div>
             @{ var i = 0;}
-
-            <div id="works-grid" class="works-grid works-grid-gutter works-grid-dark">
                 @*<h4>Viewing (@Model.Count()) Posts</h4>*@
 
 
@@ -49,15 +50,14 @@
                     { 
                         @:<div class="row">
                             }
-                    @*@(post.Published?"":"hide")*@
                     <article class="post post-preview col-sm-3 @Html.Raw(post.FilterClass)">
                         <div class="post-thumbnail">
-                            @if (post.MediaURL.IsEmpty())
+                            @if (post.MediaURL == null)
                             {
-                                @:<img src="../Images/hero-maroonBells.png" alt="Maroon Bells Wilderness class" class="crop" />
+                                @:<img class="img-responsive crop" src="../Images/hero-maroonBells.png" alt="Maroon Bells Wilderness class"/>
                                 }
                             else {
-                                @:<img src="@Html.Raw(post.MediaURL)" alt="" class="crop">
+                                @:<img src="@Url.Content(post.MediaURL)" alt="" class="img-responsive crop">
                                 }
                         </div>
                         <div class="post-header">
@@ -88,7 +88,9 @@
                         i++;
                 }
                 <!-- /POST -->
-            </div>
+            <p class="col-md-12">
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+            </p>
 
 </section>
 </main>

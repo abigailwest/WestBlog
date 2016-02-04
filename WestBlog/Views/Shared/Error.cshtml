@@ -3,7 +3,21 @@
 @{
     ViewBag.Title = "Error";
 }
+<main>
+    <section class="container container-fluid view-content">
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+        <h1 class="text-danger">Error</h1>
+        @if (String.IsNullOrEmpty(ViewBag.errorMessage))
+        {
+            <h6 class="text-danger">An error occurred while processing your request.</h6>
+        }
+        else
+        {
+            <h6 class="text-danger">@ViewBag.errorMessage</h6>
+        }
 
+        <a href="@Url.Action("Index", "Posts")" class="btn btn-round btn-dark">Back to All Posts</a>
+
+
+    </section>
+</main>

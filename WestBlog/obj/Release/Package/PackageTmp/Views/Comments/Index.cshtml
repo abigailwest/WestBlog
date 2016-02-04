@@ -1,0 +1,81 @@
+﻿@model IEnumerable<WestBlog.Models.Comment>
+@{
+    ViewBag.Title = "Index";
+}
+<main>
+    <section class="container container-fluid view-content">
+        <h2>Comments Index</h2>
+
+        <div class="row header">
+            <div class="col-thin col-sm-1">
+                <p>Post</p>
+            </div>
+            <div class="col-thin col-sm-1">
+                <p>Author</p>
+            </div>
+            <div class="col-thin col-sm-1">
+                <p>@Html.DisplayNameFor(model=>model.Created)</p>
+            </div>
+            <div class="col-thin col-sm-3">
+                <p>@Html.DisplayNameFor(model=>model.Body)</p>
+            </div>
+            <div class="col-thin col-sm-1">
+                <p>@Html.DisplayNameFor(model => model.Modified)</p>
+            </div>
+            <div class="col-thin col-sm-1">
+                <p>By</p>
+            </div>
+            <div class="col-thin col-sm-2">
+                <p>Original</p>
+            </div>
+            <div class="col-thin col-sm-1">
+                <p>@Html.DisplayNameFor(model=>model.Published)</p>
+            </div>
+            <div class="col-thin col-sm-1">
+            </div>
+        </div>
+
+        @foreach (var comment in Model.OrderBy(t => t.Post.Title))
+        {
+            <div class="row entries">
+                <div class="col-thin col-sm-1">
+                    <b>@comment.Post.Title</b>
+                </div>
+                <div class="col-thin col-sm-1">
+                    @Html.DisplayFor(modelItem => comment.Author.DisplayName)
+                </div>
+                <div class="col-thin col-sm-1">
+                    @comment.Created.DateTime.ToString("ddd, MM dd, yyyy: HH:mm"))
+                </div>
+                <div class="col-thin col-sm-3">
+                    @Html.Raw(comment.Body)
+                </div>
+                <div class="col-thin col-sm-1">
+                    @if (comment.Modified.HasValue)
+                    {
+                        @comment.Modified.Value.DateTime.ToString("ddd, MM dd, yyyy: HH:mm")
+                    }
+                </div>
+                <div class="col-thin col-sm-1 break">
+                    @if (comment.ModifiedBy != null)
+                    {
+                        @comment.ModifiedBy
+                    }
+                </div>
+                <div class="col-thin col-sm-2">
+                    @if (comment.Modified.HasValue)
+                    {
+                        @Html.Raw(comment.OriginalBody)
+                    }
+                </div>
+                <div class="col-thin col-sm-1">
+                    @Html.DisplayFor(modelItem => comment.Published)
+                </div>
+                <div class="col-thin col-sm-1 btn-group btn-group-xs" role="group">
+                    <a class="btn btn-round btn-dark" href="@Url.Action("Edit", new {id = comment.Id})">Edit</a>
+                    <a class="btn btn-round btn-dark" href="@Url.Action("Delete", new {id = comment.Id})">Delete</a>
+                </div>
+            </div>
+        }
+    </section>
+</main>

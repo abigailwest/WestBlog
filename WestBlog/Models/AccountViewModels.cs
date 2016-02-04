@@ -9,6 +9,11 @@ namespace WestBlog.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "User Name")]
+        public string DisplayName { get; set; }
+
     }
 
     public class ExternalLoginListViewModel

@@ -101,3 +101,7 @@ C:\Users\Abigail West\Documents\Visual Studio 2015\Projects\WestBlog\WestBlog\bi
 C:\Users\Abigail West\Documents\Visual Studio 2015\Projects\WestBlog\WestBlog\obj\Release\WestBlog.csprojResolveAssemblyReference.cache
 C:\Users\Abigail West\Documents\Visual Studio 2015\Projects\WestBlog\WestBlog\obj\Release\WestBlog.dll
 C:\Users\Abigail West\Documents\Visual Studio 2015\Projects\WestBlog\WestBlog\obj\Release\WestBlog.pdb
+C:\Users\Abigail West\Documents\Visual Studio 2015\Projects\WestBlog\WestBlog\bin\PagedList.dll
+C:\Users\Abigail West\Documents\Visual Studio 2015\Projects\WestBlog\WestBlog\bin\PagedList.Mvc.dll
+C:\Users\Abigail West\Documents\Visual Studio 2015\Projects\WestBlog\WestBlog\bin\PagedList.xml
+C:\Users\Abigail West\Documents\Visual Studio 2015\Projects\WestBlog\WestBlog\bin\PagedList.Mvc.xml

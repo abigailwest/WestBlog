@@ -24,6 +24,7 @@ namespace WestBlog.Models
         public string PreviousBody { get; set; }
         public bool Published { get; set; }
         [StringLength(500, ErrorMessage = "You must enter a reason to remove this comment.", MinimumLength =5)]
+        [Display(Name ="Removed because:")]
         public string ReasonRemoved { get; set; }
 
         public virtual ApplicationUser Author { get; set; }

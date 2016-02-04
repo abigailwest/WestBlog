@@ -3,11 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WestBlog.Models;
+using PagedList;
+using PagedList.Mvc;
 
 namespace WestBlog.Controllers
 {
@@ -18,7 +21,7 @@ namespace WestBlog.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Posts
-        public ActionResult Index()
+        public ActionResult Index(int? page, string query)
         {
             //This was my complicated way of doing .Where(p=>p.Published==true)
 
@@ -32,8 +35,19 @@ namespace WestBlog.Controllers
             //        PublishedPosts.Add(AllPosts[i]);
             //    }
             //}
+            var posts = from p in db.Posts
+                        select p;
+            ViewBag.Query = query;
 
-            return View(db.Posts.OrderByDescending(p => p.Created).ToList());
+            if(!String.IsNullOrEmpty(query))
+            {
+                posts = posts.Where(p => p.Body.Contains(query) || p.Title.Contains(query) || p.Category.Contains(query) || p.Comments.Any(c=>c.Body.Contains(query)) || p.Comments.Any(c=>c.Author.DisplayName.Contains(query)));
+            }
+        
+            int pageSize = 6;
+            int pageNumber = (page ?? 1);
+
+            return View(posts.Where(p=>p.Published== true).OrderByDescending(p => p.Created).ToPagedList(pageNumber, pageSize));
         }
 
         [Authorize(Roles ="Admin")]  //You can add this above the controller level (at ***) to apply it to all actions in the class
@@ -84,7 +98,7 @@ namespace WestBlog.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Body,MediaURL,Category")] Post post)
+        public ActionResult Create([Bind(Include = "Id,Title,Body,MediaURL,Category")] Post post, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
@@ -128,8 +142,21 @@ namespace WestBlog.Controllers
                 //db.SaveChanges();
                 //will add a new one for each time Create is run
 
+                post.Published = true;
                 post.Slug = Slug;
                 post.Created = DateTimeOffset.Now; //.ToString("D");
+
+                if (ModelState.IsValid)
+                {
+                    if (ImageUploadValidator.IsWebFriendlyImage(image))
+                    {
+                        var fileName = Path.GetFileName(image.FileName);
+                        image.SaveAs(Path.Combine(Server.MapPath("~/Images/"), fileName));
+                        post.MediaURL = "~/Images/" + fileName;
+                    }
+
+                }
+
                 db.Posts.Add(post);
                 db.SaveChanges();
 
@@ -151,6 +178,7 @@ namespace WestBlog.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(post);  //View(post) also stores whatever is in 'post' so that if there is an error, the information is saved
         }
 
@@ -160,7 +188,7 @@ namespace WestBlog.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Created,Updated,Title,Body,MediaURL,Category,Published,Slug")] Post post)
+        public ActionResult Edit([Bind(Include = "Id,Created,Updated,Title,Body,MediaURL,Category,Published,Slug")] Post post, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
@@ -173,6 +201,14 @@ namespace WestBlog.Controllers
                 //db.Entry(post).Property("Title").IsModified = true;
 
                 //OR replace the entire record, but hide the elements in the form that are not being modified.
+
+                if (ImageUploadValidator.IsWebFriendlyImage(image))
+                {
+                    var fileName = Path.GetFileName(image.FileName);
+                    image.SaveAs(Path.Combine(Server.MapPath("~/Images/"), fileName));
+                    post.MediaURL = "~/Images/" + fileName;
+                }
+
                 db.Entry(post).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Details", "Posts", new { slug = post.Slug });

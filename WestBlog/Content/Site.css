@@ -4,6 +4,7 @@
 
 main .with-hero {
     padding-top:0;
+    position:relative;
 }
 
 .back-g {
@@ -41,8 +42,6 @@ main .with-hero {
     width:100%;
 }
 
-
-
 .header {
     font-weight:500;
     border-bottom:solid 3px #1F1E1E;
@@ -73,6 +72,24 @@ dd {
 
 /* ------------ FORMS AND VERIFICATION ------------------*/
 
+#search {
+    position:absolute;
+    right:-25px;
+    width:22%;
+    top:50px;
+    margin-top:0px;
+    z-index:2;
+}
+
+#search button {
+    box-sizing:border-box;
+    width:100%;
+    padding: 0 12px;
+}
+
+#query {
+    margin:5px 5px;
+}
 
 #verify {
     display:none;
@@ -87,6 +104,14 @@ dd {
     padding:5px;
 }
 
+#reasonRemoved {
+    display:none;
+}
+
+#media-change {
+    display:none;
+}
+
 .verify-contain {
     position:relative;
 }
@@ -97,6 +122,10 @@ p.text-danger {
 
 .form-group .btn {
     margin: 5px 5px;
+}
+
+.btn-two {
+    width:250px;
 }
 
 /* ---------------------- ADMIN POSTS --------------------*/

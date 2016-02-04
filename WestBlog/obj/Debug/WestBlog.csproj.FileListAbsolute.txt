@@ -101,3 +101,7 @@ C:\Users\Abigail West\Documents\Visual Studio 2015\Projects\WestBlog\WestBlog\bi
 C:\Users\Abigail West\Documents\Visual Studio 2015\Projects\WestBlog\WestBlog\bin\roslyn\vbc.exe.config
 C:\Users\Abigail West\Documents\Visual Studio 2015\Projects\WestBlog\WestBlog\bin\roslyn\vbc.rsp
 C:\Users\Abigail West\Documents\Visual Studio 2015\Projects\WestBlog\WestBlog\bin\Owin.Security.Providers.dll
+C:\Users\Abigail West\Documents\Visual Studio 2015\Projects\WestBlog\WestBlog\bin\PagedList.dll
+C:\Users\Abigail West\Documents\Visual Studio 2015\Projects\WestBlog\WestBlog\bin\PagedList.Mvc.dll
+C:\Users\Abigail West\Documents\Visual Studio 2015\Projects\WestBlog\WestBlog\bin\PagedList.xml
+C:\Users\Abigail West\Documents\Visual Studio 2015\Projects\WestBlog\WestBlog\bin\PagedList.Mvc.xml
