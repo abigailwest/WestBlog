@@ -26,27 +26,30 @@
             @using (Html.BeginForm())
             {
                 <div class="row">
-                    @Html.TextBox("query", null, new { @class = "form-control", @placeholder = "Search posts", @name = "query", @value = "@ViewBag.Query" })
-                    <button type="submit" class="btn btn-dark btn-round"><span class="glyphicon glyphicon-search"></span></button>
+                    <form class="inline" action="@Url.Action("Index", "Posts", new {query = ViewBag.Query})">
+                        <div class="form-group">
+                            @Html.TextBox("query", null, new { @class = "form-control", @placeholder = "Search " + @ViewBag.Category, @name = "query", @value = "@ViewBag.Query" })
+                            <button type="submit" class="btn btn-dark btn-round"><span class="glyphicon glyphicon-search"></span></button>
+                        </div>
+                    </form>
                 </div>
             }
         </div>
-        @*@Html.Raw(Model.FilterClass)*@
-        <div class="sidebar pull-right">
+        <div class="sidebar">
             <aside>
                 <h6>Categories</h6>
-                <ul id="filters" class="filters">
-                    <li><a href="#" id="all" class="current" data-filter="*">All</a></li>
-                    <li><a href="#" id="front-end" data-filter=".front-end">Front End</a></li>
-                    <li><a href="#" id="server-side" data-filter=".server-side">Server Side</a></li>
-                    <li><a href="#" id="mvc" data-filter=".mvc">MVC</a></li>
-                    <li><a href="#" id="fun-find" data-filter=".fun-finds">Fun Finds</a></li>
-                    <li><a href="#" id="none" data-filter=".none"></a></li>
+                <ul class="category-list">
+                    <li>@Html.ActionLink("All", "Index") </li>
+                    <li>@Html.ActionLink("Programming", "Index", "Posts", new { category = "Programming" }, null)</li>
+                    <li>@Html.ActionLink("Art and Design", "Index", "Posts", new { category = "Art and Design" }, null)</li>
+                    <li>@Html.ActionLink("Adventure", "Index", "Posts", new { category = "Adventure" }, null)</li>
+                    <li>@Html.ActionLink("Fun Finds", "Index", "Posts", new { category = "Fun Finds" }, null) </li>
                 </ul>
             </aside>
         </div>
         @{ var i = 0;}
-        @*<h4>Viewing (@Model.Count()) Posts</h4>*@
+
+      @*<h4>Viewing(@Model.Where(Model.FirstOrDefault().Category = category).Count() Category Posts</h4>*@
 
         <!-- POST -->
 
@@ -55,8 +58,8 @@
             if (i % 3 == 0)
             {
                 @:<div class="row">
-                            }
-            <article class="post post-preview col-sm-3 @Html.Raw(post.FilterClass)">
+            }
+            <article class="post post-preview col-sm-3">
                 <div class="post-thumbnail">
                     @if (post.MediaURL == null)
                     {
@@ -95,8 +98,8 @@
             i++;
         }
         <!-- /POST -->
-        <div class="col-md-12">
-            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+        <div class="col-md-12 category">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.Query, category = ViewBag.Category }), PagedListRenderOptions.MinimalWithItemCountText)
         </div>
 
     </section>

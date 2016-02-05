@@ -33,32 +33,20 @@ else
             <div class="col-md-8 col-sm-offset-2">
                 <article class="post">
                     <div class="post-content">
+                        <h6 class="category">@Model.Category</h6>
                         <h4>@Model.Created.DateTime.ToLongDateString()</h4>
                         <h5>@Model.Created.DateTime.ToShortTimeString()</h5>
                         @if (Model.Updated.HasValue)
                         {   <p><i>Updated:</i>@Model.Updated.Value.DateTime.ToLongDateString()</p>
                         }
-                        <!-- Owl-slider start
-                        <div class="owl-carousel slider-images">
 
-                            <div class="owl-item">
-                                <p><img src="assets/images/module-4.jpg" alt=""></p>
-                            </div>
-
-                            <div class="owl-item">
-                                <p><img src="assets/images/module-5.jpg" alt=""></p>
-                            </div>
-
-                        </div>
-                        Owl-slider end -->
-                        <h6 class="category">@Model.Category</h6>
                         <div class="post-body">@Html.Raw(Model.Body)</div>
                         <div class="row">
                             <button type="button" class="btn btn-dark btn-round" onclick="location.href='@Url.Action("Index")';return false;">Back to All Posts</button>
                             @if (User.IsInRole("Admin"))
-                            {
-                                <button type="button" class="btn btn-dark btn-round" onclick="location.href='@Url.Action("Edit", new { slug = Model.Slug })';return false;">Edit</button>
-                                <button type="button" class="btn btn-dark btn-round" onclick="location.href='@Url.Action("Delete", new { slug = Model.Slug })';return false;">Delete</button>
+                            { 
+                                <button type="button" class="btn btn-dark btn-round" onclick="location.href='@Url.Action("Edit", new { id = Model.Id })';return false;">Edit</button>
+                                <button type="button" class="btn btn-dark btn-round" onclick="location.href='@Url.Action("Delete", new { id = Model.Id })';return false;">Delete</button>
                             }
                         </div>
                     </div>

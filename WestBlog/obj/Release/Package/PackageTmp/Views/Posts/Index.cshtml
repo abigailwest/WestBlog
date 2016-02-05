@@ -6,7 +6,7 @@
     ViewBag.Title = "Index";
 }
 
-		<!-- HERO -->
+<!-- HERO -->
 <section id="hero" class="module-hero module-parallax module-overlay-dark-1" data-background="/Images/hero-maroonBells.png">
 
     <!-- HERO TEXT -->
@@ -21,76 +21,86 @@
 </section>
 <!-- /HERO -->
 <main>
-        <section class="container container-fluid view-content with-hero">
-            @*@Html.Raw(Model.FilterClass)*@
-            <div class="sidebar pull-right">
-                <aside>
-                    <h6>Categories</h6>
-                    <ul id="filters" class="filters">
-                        <li><a href="#" id="all" class="current" data-filter="*">All</a></li>
-                        <li><a href="#" id="front-end" data-filter=".front-end">Front End</a></li>
-                        <li><a href="#" id="server-side" data-filter=".server-side">Server Side</a></li>
-                        <li><a href="#" id="mvc" data-filter=".mvc">MVC</a></li>
-                        <li><a href="#" id="fun-find" data-filter=".fun-finds">Fun Finds</a></li>
-                        <li><a href="#" id="none" data-filter=".none"></a></li>
-                    </ul>
-                </aside>
-            </div>
-            @{ var i = 0;}
-                @*<h4>Viewing (@Model.Count()) Posts</h4>*@
+    <section class="container container-fluid view-content with-hero">
+        <div id="search" class="form-group">
+            @using (Html.BeginForm())
+            {
+                <div class="row">
+                    <form class="inline" action="@Url.Action("Index", "Posts", new {query = ViewBag.Query})">
+                        <div class="form-group">
+                            @Html.TextBox("query", null, new { @class = "form-control", @placeholder = "Search " + @ViewBag.Category, @name = "query", @value = "@ViewBag.Query" })
+                            <button type="submit" class="btn btn-dark btn-round"><span class="glyphicon glyphicon-search"></span></button>
+                        </div>
+                    </form>
+                </div>
+            }
+        </div>
+        <div class="sidebar">
+            <aside>
+                <h6>Categories</h6>
+                <ul class="category-list">
+                    <li>@Html.ActionLink("All", "Index") </li>
+                    <li>@Html.ActionLink("Programming", "Index", "Posts", new { category = "Programming" }, null)</li>
+                    <li>@Html.ActionLink("Art and Design", "Index", "Posts", new { category = "Art and Design" }, null)</li>
+                    <li>@Html.ActionLink("Adventure", "Index", "Posts", new { category = "Adventure" }, null)</li>
+                    <li>@Html.ActionLink("Fun Finds", "Index", "Posts", new { category = "Fun Finds" }, null) </li>
+                </ul>
+            </aside>
+        </div>
+        @{ var i = 0;}
 
+      @*<h4>Viewing(@Model.Where(Model.FirstOrDefault().Category = category).Count() Category Posts</h4>*@
 
-                <!-- POST -->
-                
+        <!-- POST -->
 
-
-                @foreach (var post in Model)
-                {
-                    if (i % 3 == 0)
-                    { 
-                        @:<div class="row">
-                            }
-                    <article class="post post-preview col-sm-3 @Html.Raw(post.FilterClass)">
-                        <div class="post-thumbnail">
-                            @if (post.MediaURL == null)
-                            {
-                                @:<img class="img-responsive crop" src="../Images/hero-maroonBells.png" alt="Maroon Bells Wilderness class"/>
+        @foreach (var post in Model)
+        {
+            if (i % 3 == 0)
+            {
+                @:<div class="row">
+            }
+            <article class="post post-preview col-sm-3">
+                <div class="post-thumbnail">
+                    @if (post.MediaURL == null)
+                    {
+                        @:<img class="img-responsive crop" src="../Images/hero-maroonBells.png" alt="Maroon Bells Wilderness class" />
                                 }
-                            else {
-                                @:<img src="@Url.Content(post.MediaURL)" alt="" class="img-responsive crop">
+                    else {
+                        @:<img src="@Url.Content(post.MediaURL)" alt="" class="img-responsive crop">
                                 }
-                        </div>
-                        <div class="post-header">
+                </div>
+                <div class="post-header">
 
-                            <h2 class="post-title"><a href="@Url.Action("Details", new { slug = post.Slug })">@post.Title</a></h2>
-                            <h4 class="category">@Html.Raw(post.Category)</h4>
-                            <h6>@Html.Raw(post.Created.DateTime.ToLongDateString())</h6>
-                            <p>@Html.Raw(post.Created.DateTime.ToShortTimeString())</p>
-                        </div>
-                        <div class="post-content preview">
-                            <p>@Html.Raw(post.Body)</p>
-                        </div>
-                        <div class="post-links">
-                            <!--Shows {included} only to proper authorization level-->
-                            @if (User.IsInRole("Admin")) //User.Identity.IsAuthenticated for logged in
-                            {
-                                    @Html.ActionLink("Edit", "Edit", new { id = post.Id })
-                                    @Html.ActionLink("Delete", "Delete", new { id = post.Id })
-                            }
-                            <a href="@Url.Action("Details", new { slug = post.Slug })"><span>Read More &rarr;</span></a>
-                        </div>
-                    </article>
-                        if (i % 3 == 2)
-                        {
-                            @:</div>
+                    <h2 class="post-title"><a href="@Url.Action("Details", new { slug = post.Slug })">@post.Title</a></h2>
+                    <h4 class="category">@Html.Raw(post.Category)</h4>
+                    <h6>@Html.Raw(post.Created.DateTime.ToLongDateString())</h6>
+                    <p>@Html.Raw(post.Created.DateTime.ToShortTimeString())</p>
+                </div>
+                <div class="post-content preview">
+                    <p>@Html.Raw(post.Body)</p>
+                </div>
+                <div class="post-links">
+                    <!--Shows {included} only to proper authorization level-->
+                    @if (User.IsInRole("Admin")) //User.Identity.IsAuthenticated for logged in
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = post.Id })
+                        @Html.ActionLink("Delete", "Delete", new { id = post.Id })
+                    }
+                    <a href="@Url.Action("Details", new { slug = post.Slug })"><span>Read More &rarr;</span></a>
+                </div>
+            </article>
+            if (i % 3 == 2)
+            {
+                @:</div>
 
-                        }
-                        i++;
-                }
-                <!-- /POST -->
-            <p class="col-md-12">
-                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
-            </p>
 
-</section>
+            }
+            i++;
+        }
+        <!-- /POST -->
+        <div class="col-md-12 category">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.Query, category = ViewBag.Category }), PagedListRenderOptions.MinimalWithItemCountText)
+        </div>
+
+    </section>
 </main>

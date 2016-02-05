@@ -256,11 +256,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\bonas.png" />
     <Content Include="Images\hamm-spoon.jpg" />
     <Content Include="Images\hero-maroonBells.png" />
     <Content Include="Images\icon-c.png" />
     <Content Include="Images\icon-mvc.png" />
     <Content Include="Images\light-logo-mine.png" />
+    <Content Include="Images\puppyDog.png" />
+    <Content Include="Images\shrooms.png" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\appear.js" />
@@ -580,7 +583,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\thumbs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

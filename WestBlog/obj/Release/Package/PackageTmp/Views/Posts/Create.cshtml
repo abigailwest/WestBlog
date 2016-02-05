@@ -36,7 +36,8 @@
                     <div class="col-md-10">
 
                         @*@Html.EditorFor(model => model.MediaURL, new { htmlAttributes = new { @class = "form-control" } })*@
-                        <input name="image" type="file" class="form-control" id="fileUpload" />
+                        <input name="image" type="file" class="form-control form-narrow" id="fileUpload"/>
+                        <p class="text-danger">Image must be smaller than 2MB.</p>
                         @Html.ValidationMessageFor(model => model.MediaURL, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -44,11 +45,10 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.DropDownListFor(model=>model.Category, new SelectList(  new string[] {"Front End","Server Side","MVC", "Fun Finds" } ),new { @class = "form-control"})
+                        @Html.DropDownListFor(model=>model.Category, new SelectList(  new string[] { "Programming", "Art and Design", "Adventure", "Fun Finds" } ),new { @class = "form-control form-narrow"})
                         @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
                 <div class="form-group">
                     <div class="verify-contain col-md-offset-2 col-md-10">
                         <button type="button" id="create" class="btn btn-dark btn-round">Create</button>

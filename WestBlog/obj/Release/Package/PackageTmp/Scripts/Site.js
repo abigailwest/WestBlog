@@ -9,14 +9,13 @@
     $('#create').click(verifySubmit);
     $('#delete').click(verifySubmit);
     function verifySubmit() {
-        $('#verify').show();
+        $('#verify').show("slow");
     }
 
     $("#publish-check").change(function(){
         if (!$(this).is(':checked')) {
-            $('#reasonRemoved').show();
+            $('#reasonRemoved').show("slow");
         }
     })
-
 
 });

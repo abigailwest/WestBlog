@@ -69,11 +69,18 @@
                     }
                 </div>
                 <div class="col-thin col-sm-1">
-                    @Html.DisplayFor(modelItem => comment.Published)
+                    @if (comment.Published == true)
+                    {
+                        <span class="glyphicon glyphicon-ok"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-remove"></span>
+                    }
                 </div>
-                <div class="col-thin col-sm-1 btn-group btn-group-xs" role="group">
-                    <a class="btn btn-round btn-dark" href="@Url.Action("Edit", new {id = comment.Id})">Edit</a>
-                    <a class="btn btn-round btn-dark" href="@Url.Action("Delete", new {id = comment.Id})">Delete</a>
+                <div class="col-sm-1">
+                    <a class="btn btn-round btn-dark btn-admin" href="@Url.Action("Edit", new {id = comment.Id})">Edit</a><br />
+                    <a class="btn btn-round btn-dark btn-admin" href="@Url.Action("Delete", new {id = comment.Id})">Delete</a>
                 </div>
             </div>
         }

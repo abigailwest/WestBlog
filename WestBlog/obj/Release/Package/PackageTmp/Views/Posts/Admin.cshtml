@@ -5,11 +5,11 @@
 
 <main class="main">
     <section class="container container-fluid view-content">
-        <h2>Index</h2>
+        <h2>Posts Index</h2>
 
         <a class="btn btn-round btn-dark" href="@Url.Action("Create", "Create")">Create New</a>
         <div class="row header">
-            <div class="col-sm-1">
+            <div class="col-sm-2">
                 <h4>@Html.DisplayNameFor(model => model.Title)</h4>
             </div>
             <div class="col-sm-3">
@@ -33,7 +33,7 @@
             <div class="col-sm-1">
                 <h4>@Html.DisplayNameFor(model => model.Published)</h4>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-1">
 
             </div>
         </div>
@@ -41,7 +41,7 @@
         @foreach (var post in Model)
         {
             <div class="row entries">
-                <div class="col-sm-1">
+                <div class="col-sm-2">
                     <b>@Html.DisplayFor(modelItem => post.Title)</b>
                 </div>
                 <div class="col-sm-3">
@@ -65,14 +65,19 @@
                     @Html.DisplayFor(modelItem => post.MediaURL)
                 </div>
                 <div class="col-sm-1">
-                    @Html.DisplayFor(modelItem => post.Published)
+                    @if (post.Published == true)
+                    {
+                        <span class="glyphicon glyphicon-ok"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-remove"></span>
+                    }
                 </div>
-                <div class="col-sm-2">
-                    <div class="btn-group btn-group-xs" role="group">
-                        <a class="btn btn-round btn-dark" href="@Url.Action("Edit", new {id = post.Id})">Edit</a>
-                        <a class="btn btn-round btn-dark" href="@Url.Action("Details", new {slug = post.Slug})">Details</a>
-                        <a class="btn btn-round btn-dark" href="@Url.Action("Delete", new {id = post.Id})">Delete</a>
-                    </div>
+                <div class="col-sm-1">
+                        <a class="btn btn-round btn-dark btn-admin" href="@Url.Action("Edit", new {id = post.Id})">Edit</a><br />
+                        <a class="btn btn-round btn-dark btn-admin" href="@Url.Action("Details", new {slug = post.Slug})">Details</a><br />
+                        <a class="btn btn-round btn-dark btn-admin" href="@Url.Action("Delete", new {id = post.Id})">Delete</a>
                 </div>
             </div>
         }

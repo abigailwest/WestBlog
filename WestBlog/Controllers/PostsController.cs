@@ -21,31 +21,38 @@ namespace WestBlog.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Posts
-        public ActionResult Index(int? page, string query)
+        public ActionResult Index(int? page, string currentFilter, string query, string category)
         {
-            //This was my complicated way of doing .Where(p=>p.Published==true)
-
-            //List<Models.Post> AllPosts = new List<Models.Post>(db.Posts);
-            //List<Models.Post> PublishedPosts = new List<Models.Post>();
-            //for (var i = 0; i < AllPosts.Count; i++)
-            //{
-            //    if (AllPosts[i].Published.Equals(true))
-            //    {
-            //        //System.Diagnostics.Debug.WriteLine("Adding Post at " + i.ToString());
-            //        PublishedPosts.Add(AllPosts[i]);
-            //    }
-            //}
             var posts = from p in db.Posts
                         select p;
-            ViewBag.Query = query;
 
-            if(!String.IsNullOrEmpty(query))
-            {
-                posts = posts.Where(p => p.Body.Contains(query) || p.Title.Contains(query) || p.Category.Contains(query) || p.Comments.Any(c=>c.Body.Contains(query)) || p.Comments.Any(c=>c.Author.DisplayName.Contains(query)));
-            }
-        
             int pageSize = 6;
             int pageNumber = (page ?? 1);
+            
+            if (category != null)
+            {
+                posts = posts.Where(p => p.Category.Equals(category));
+            }
+            ViewBag.Category = category;
+
+            if (query!= null)
+            {
+                page = 1;
+            }
+            else
+            {
+                query = currentFilter;
+            }
+            ViewBag.Query = query;
+
+            if (!String.IsNullOrEmpty(query))
+            {
+                posts = posts.Where(p => p.Body.Contains(query) || 
+                                        p.Title.Contains(query) || 
+                                     p.Category.Contains(query) || 
+                      p.Comments.Any(c=>c.Body.Contains(query)) || 
+                      p.Comments.Any(c=>c.Author.DisplayName.Contains(query)));
+            }
 
             return View(posts.Where(p=>p.Published== true).OrderByDescending(p => p.Created).ToPagedList(pageNumber, pageSize));
         }
@@ -66,16 +73,16 @@ namespace WestBlog.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            List<Models.Comment> AllComments = new List<Models.Comment>(db.Comments);
-            List<Models.Comment> PublishedComments = new List<Models.Comment>();
-            for (var i = 0;i< AllComments.Count;i++)
-            {
-                if (AllComments[i].Published.Equals(true))
-                {
-                    PublishedComments.Add(AllComments[i]);
-                }
-                System.Diagnostics.Debug.WriteLine(PublishedComments);
-            }
+            //List<Models.Comment> AllComments = new List<Models.Comment>(db.Comments);
+            //List<Models.Comment> PublishedComments = new List<Models.Comment>();
+            //for (var i = 0;i< AllComments.Count;i++)
+            //{
+            //    if (AllComments[i].Published.Equals(true))
+            //    {
+            //        PublishedComments.Add(AllComments[i]);
+            //    }
+            //    System.Diagnostics.Debug.WriteLine(PublishedComments);
+            //}
 
             Post post = db.Posts.Include("Comments").FirstOrDefault(p=>p.Slug == slug);
             if (post == null)
@@ -115,46 +122,16 @@ namespace WestBlog.Controllers
                     return View(post);
                 }
 
-                if (post.Category == "Front End")
-                {
-                    post.FilterClass = "front-end";
-                }
-                else if(post.Category == "Server Side")
-                {
-                    post.FilterClass = "server-side";
-                }
-                else if(post.Category == "MVC")
-                {
-                    post.FilterClass = "mvc";
-                }
-                else if(post.Category == "Fun Finds")
-                {
-                    post.FilterClass = "fun-finds";
-                }
-                else
-                {
-                    post.FilterClass = "none";
-                }
-                //manually create new object
-                //var post1 = new Post();
-                //run whatever code to check if exists, etc; assign properties through post1.Title, post1.Slug...
-                //then db.TableName.Add(post1)
-                //db.SaveChanges();
-                //will add a new one for each time Create is run
-
                 post.Published = true;
                 post.Slug = Slug;
                 post.Created = DateTimeOffset.Now; //.ToString("D");
 
-                if (ModelState.IsValid)
-                {
-                    if (ImageUploadValidator.IsWebFriendlyImage(image))
-                    {
-                        var fileName = Path.GetFileName(image.FileName);
-                        image.SaveAs(Path.Combine(Server.MapPath("~/Images/"), fileName));
-                        post.MediaURL = "~/Images/" + fileName;
-                    }
 
+                if (ImageUploadValidator.IsWebFriendlyImage(image))
+                {
+                    var fileName = Path.GetFileName(image.FileName);
+                    image.SaveAs(Path.Combine(Server.MapPath("~/Images/"), fileName));
+                    post.MediaURL = "~/Images/" + fileName;
                 }
 
                 db.Posts.Add(post);
@@ -188,11 +165,13 @@ namespace WestBlog.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Created,Updated,Title,Body,MediaURL,Category,Published,Slug")] Post post, HttpPostedFileBase image)
+        public ActionResult Edit([Bind(Include = "Id,Created,Updated,Title,Body,MediaURL,Category,Published,Slug")] Post post, HttpPostedFileBase image, string Submit)
         {
             if (ModelState.IsValid)
             {
                 post.Updated = System.DateTimeOffset.Now;
+                var slug = post.Slug;
+
                 //TO PREVENT NULLS BEING INSERTED FOR NON-MODIFIED VALUES, either:
 
                 //Set each modified property to true and save changes:
@@ -211,7 +190,15 @@ namespace WestBlog.Controllers
 
                 db.Entry(post).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Details", "Posts", new { slug = post.Slug });
+
+                if (Submit == "Save and go to Admin page")
+                {
+                    return RedirectToAction("Admin");
+                }
+                else if (Submit == "Save and go to post")
+                {
+                    return RedirectToAction("Details", "Posts", new { slug = slug });
+                }
             }
             return View(post); 
         }

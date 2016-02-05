@@ -64,7 +64,7 @@
 			if (hero.length > 0 && hero.hasClass('js-fullheight') ) {
 				hero.height($( window ).height());
 			} else if (hero.length > 0) {
-				hero.height($( window ).height() * 0.7);
+				hero.height($( window ).height() * 0.9);
 			}
 		}).resize();
 
