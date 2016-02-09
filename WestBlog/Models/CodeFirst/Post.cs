@@ -13,11 +13,10 @@ namespace WestBlog.Models
         {
             this.Comments = new HashSet<Comment>(); //instantiates the Comments collection for use; 'this' points to the particular instance object Post
         }
-        //use 'prop tab tab' for autofill
         public int Id { get; set; }
         public DateTimeOffset Created { get; set; }
         public DateTimeOffset? Updated { get; set; } //? allows null. Can also use <nullable> before variable name
-        [Required] // server-side authentication; following field is required
+        [Required]
         public string Title { get; set; }
         [Required]
         [AllowHtml]

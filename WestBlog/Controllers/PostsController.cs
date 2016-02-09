@@ -65,7 +65,7 @@ namespace WestBlog.Controllers
             return View(db.Posts.OrderByDescending(p => p.Created).ToList());
         }
 
-        // GET: Posts/Details/5
+        // GET: Posts/Details/slug
         public ActionResult Details(string slug)
         {
             if (String.IsNullOrWhiteSpace(slug))

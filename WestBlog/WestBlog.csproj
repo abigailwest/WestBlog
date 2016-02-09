@@ -258,6 +258,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\bonas.png" />
     <Content Include="Images\hamm-spoon.jpg" />
+    <Content Include="Images\hero-escalante.png" />
     <Content Include="Images\hero-maroonBells.png" />
     <Content Include="Images\icon-c.png" />
     <Content Include="Images\icon-mvc.png" />
