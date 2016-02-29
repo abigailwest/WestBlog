@@ -17,12 +17,6 @@ namespace WestBlog
                 defaults: new { controller = "Posts", action = "Details", slug = UrlParameter.Optional }
             );
 
-            //routes.MapRoute(
-            //    name: "ByCategory",
-            //    url: "Blog/{category}",
-            //    defaults: new { controller = "Posts", action = "Index", category = UrlParameter.Optional }
-            //);
-
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.MapRoute(
                 name: "Default",

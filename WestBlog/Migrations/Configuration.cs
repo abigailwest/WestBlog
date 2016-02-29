@@ -21,9 +21,7 @@ namespace WestBlog.Migrations
                 new RoleStore<IdentityRole>(context));
 
             if (!context.Roles.Any(r => r.Name == "Admin"))
-            {
                 roleManager.Create(new IdentityRole { Name = "Admin" });
-            }
 
             var userManager = new UserManager<ApplicationUser>( new UserStore<ApplicationUser>(context));
 
@@ -43,9 +41,7 @@ namespace WestBlog.Migrations
             //FOR MODERATOR
 
             if (!context.Roles.Any(r => r.Name == "Moderator"))
-            {
                 roleManager.Create(new IdentityRole { Name = "Moderator" });
-            }
 
             if (!context.Users.Any(u => u.Email == "moderator@coderfoundry.com"))
             {

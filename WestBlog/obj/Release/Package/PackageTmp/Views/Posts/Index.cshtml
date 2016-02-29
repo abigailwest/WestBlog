@@ -29,7 +29,7 @@
                     <form class="inline" action="@Url.Action("Index", "Posts", new {query = ViewBag.Query})">
                         <div class="form-group">
                             @Html.TextBox("query", null, new { @class = "form-control", @placeholder = "Search " + @ViewBag.Category, @name = "query", @value = "@ViewBag.Query" })
-                            <button type="submit" class="btn btn-dark btn-round"><span class="glyphicon glyphicon-search"></span></button>
+                            <button type="submit" class="btn btn-dark btn-round"><span class="fa fa-search"></span></button>
                         </div>
                     </form>
                 </div>
@@ -72,9 +72,9 @@
                 <div class="post-header">
 
                     <h2 class="post-title"><a href="@Url.Action("Details", new { slug = post.Slug })">@post.Title</a></h2>
-                    <h4 class="category">@Html.Raw(post.Category)</h4>
-                    <h6>@Html.Raw(post.Created.DateTime.ToLongDateString())</h6>
-                    <p>@Html.Raw(post.Created.DateTime.ToShortTimeString())</p>
+                    <h4 class="category">@post.Category</h4>
+                    <h6>@post.Created.DateTime.ToLongDateString()</h6>
+                    <p>@post.Created.DateTime.ToShortTimeString()</p>
                 </div>
                 <div class="post-content preview">
                     <p>@Html.Raw(post.Body)</p>

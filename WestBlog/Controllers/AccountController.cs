@@ -177,14 +177,14 @@ namespace WestBlog.Controllers
                 if (result.Succeeded)
                 {
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account");
+                    //string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account");
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
 
 
-                    //string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account with Words from the West by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account with Words from the West by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     //Uncomment to debug locally
                     //TempData["ViewBagLink"] = callbackUrl;
@@ -236,7 +236,7 @@ namespace WestBlog.Controllers
                 string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code}, protocol: Request.Url.Scheme);
 
-                await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account with Words from the West by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Thank you for registering with Words from the West! Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
             }
 
             return RedirectToAction("ConfirmationSent");
@@ -275,7 +275,7 @@ namespace WestBlog.Controllers
                 // Send an email with this link
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Words from the West has been notified that you need a new password. Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
@@ -391,7 +391,7 @@ namespace WestBlog.Controllers
             }
 
             // Sign in the user with this external login provider if the user already has a login
-            var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+            var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: true);
             switch (result)
             {
                 case SignInStatus.Success:
