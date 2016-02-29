@@ -54,7 +54,14 @@
 
             <div class="form-group">
                 <div class="verify-contain col-md-offset-2 col-md-10">
-                    <button type="button" id="delete" class="btn btn-dark btn-round">Delete</button>
+                    @if (User.IsInRole("GuestAdmin"))
+                    {
+                        <button type="button" id="delete" class="btn btn-dark btn-round" disabled>Delete</button>
+                    }
+                    else
+                    {
+                        <button type="button" id="delete" class="btn btn-dark btn-round">Delete</button>
+                    }
                     <div id="verify">
                         <p  class="text-danger">Are you sure you want to permanently delete this comment?</p>
                         <input type="submit" value="Yes, delete" class="btn btn-dark btn-round pull-right" />

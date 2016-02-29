@@ -6,8 +6,16 @@
 <main class="main">
     <section class="container container-fluid view-content">
         <h2>Posts Index</h2>
+        @if (User.IsInRole("GuestAdmin"))
+        {
+            <div class="alert alert-info">
+                <h4>Welcome to the Administrator's Page</h4>
+                <p>As a Guest Administrator, you have visual access to this page and its related pages. However, you are not authorized to make any changes. To protect the integrity of this blog, the buttons and controller actions to delete or save edited posts have been disabled. After you've had your fun, check out the pages visible to normally authenticated users and see if you can find the differences!</p>
+                <p>This page was designed to offer a quick glance at all posts and related information, including posts that have been created but not approved for publishing. When editing, a full admin has the option to return to this page or to return to the post details.</p>
+            </div>
+        }
 
-        <a class="btn btn-round btn-dark" href="@Url.Action("Create", "Create")">Create New</a>
+        <a class="btn btn-round btn-dark" href="@Url.Action("Create", "Posts")">Create New</a>
         <div class="row header">
             <div class="col-sm-2">
                 <h4>@Html.DisplayNameFor(model => model.Title)</h4>

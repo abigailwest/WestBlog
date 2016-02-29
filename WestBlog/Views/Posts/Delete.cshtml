@@ -74,7 +74,14 @@
 
             <div class="form-actions no-color">
                 <div class="verify-contain col-md-offset-2 col-md-10">
-                    <button type="button" id="delete" class="btn btn-round btn-dark">Delete</button>
+                    @if (User.IsInRole("GuestAdmin"))
+                    {
+                        <button type="button" id="delete" class="btn btn-round btn-dark" disabled>Delete</button>
+                    }
+                    else
+                    {
+                        <button type="button" id="delete" class="btn btn-round btn-dark">Delete</button>
+                    }
                     <div id="verify" class="text-danger">
                         <p>Are you sure you want to permanently delete this post?</p>
                         <input type="submit" value="Yes, delete" class="btn btn-dark btn-round pull-right" />

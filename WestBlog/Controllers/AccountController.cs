@@ -70,14 +70,6 @@ namespace WestBlog.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            //THROWS AN ERROR: "A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible"
-            //var currentUser = Membership.GetUser("moderator@coderfoundry.com");
-            //if (currentUser.LastPasswordChangedDate == currentUser.CreationDate)
-            //{
-            //    // User has not changed password since created.
-            //    return RedirectToAction("ResetPassword");
-            //}
-
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -109,6 +101,28 @@ namespace WestBlog.Controllers
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
+            }
+        }
+
+        // POST: /Account/LoginGuestModerator
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> LoginGuestAdmin()
+        {
+            var user = await UserManager.FindByNameAsync("guest@wordsfromthewest.com");
+
+            var result = await SignInManager.PasswordSignInAsync("guest@wordsfromthewest.com", "Password-1", false, shouldLockout: false);
+            switch (result)
+            {
+                case SignInStatus.Success:
+                    return RedirectToAction("Index", "Posts");
+                case SignInStatus.LockedOut:
+                    return View("Lockout");
+                case SignInStatus.Failure:
+                default:
+                    ModelState.AddModelError("", "Invalid login attempt.");
+                    return RedirectToAction("Index", "Posts");
             }
         }
 

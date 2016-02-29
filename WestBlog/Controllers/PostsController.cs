@@ -57,7 +57,7 @@ namespace WestBlog.Controllers
             return View(posts.Where(p=>p.Published== true).OrderByDescending(p => p.Created).ToPagedList(pageNumber, pageSize));
         }
 
-        [Authorize(Roles ="Admin")]  //You can add this above the controller level (at ***) to apply it to all actions in the class
+        [Authorize(Roles ="Admin, GuestAdmin")]  //You can add this above the controller level (at ***) to apply it to all actions in the class
                                      // Can be layered. Ex: [Authorize] (all logged in users) at class level and
                                      //                     [Authorize(Roles ="Admin, Moderator")] individual controller level
         public ActionResult Admin()
@@ -93,7 +93,7 @@ namespace WestBlog.Controllers
         }
 
         // GET: Posts/Create
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles ="Admin, GuestAdmin")]
         public ActionResult Create()
         {
             return View();
@@ -143,7 +143,7 @@ namespace WestBlog.Controllers
         }
 
         // GET: Posts/Edit/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, GuestAdmin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -205,7 +205,7 @@ namespace WestBlog.Controllers
 
 
         // GET: Posts/Delete/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, GuestAdmin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

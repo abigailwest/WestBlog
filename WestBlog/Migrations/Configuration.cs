@@ -55,6 +55,25 @@ namespace WestBlog.Migrations
 
             userId = userManager.FindByEmail("moderator@coderfoundry.com").Id;
             userManager.AddToRole(userId, "Moderator");
+
+            //GUEST ADMIN
+            if (!context.Roles.Any(r => r.Name == "GuestAdmin"))
+                roleManager.Create(new IdentityRole { Name = "GuestAdmin" });
+
+            if (!context.Users.Any(u=>u.Email == "guest@wordsfromthewest.com"))
+            {
+                userManager.Create(new ApplicationUser
+                {
+                    UserName = "guest@wordsfromthewest.com",
+                    Email = "guest@wordsfromthewest.com",
+                    DisplayName = "Guest Admin"
+                }, "Password-1");
+            }
+
+            userId = userManager.FindByEmail("guest@wordsfromthewest.com").Id;
+            userManager.AddToRole(userId, "GuestAdmin");
+
+
         }
     }
 }

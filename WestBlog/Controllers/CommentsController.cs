@@ -15,7 +15,7 @@ namespace WestBlog.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: /Comments - All Comments
-        [Authorize(Roles ="Admin, Moderator")]
+        [Authorize(Roles ="Admin, Moderator, GuestAdmin")]
         public ActionResult Index()
         {
             return View(db.Comments.OrderBy(c=>c.PostId).ToList());
@@ -45,7 +45,7 @@ namespace WestBlog.Controllers
         }
 
         //GET: Comments/Edit/5
-        [Authorize(Roles ="Admin, Moderator")]
+        [Authorize(Roles ="Admin, Moderator, GuestAdmin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -94,7 +94,7 @@ namespace WestBlog.Controllers
         }
 
         //GET: Comments/Delete/5
-        [Authorize(Roles ="Admin, Moderator")]
+        [Authorize(Roles ="Admin, Moderator, GuestAdmin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
