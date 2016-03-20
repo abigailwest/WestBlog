@@ -6,6 +6,15 @@
     <section class="container container-fluid view-content">
         <h2>Comments Index</h2>
 
+        @if (User.IsInRole("GuestAdmin"))
+        {
+            <div class="alert alert-info">
+                <h4>Welcome to the Moderator's Page</h4>
+                <p>As a Guest Administrator, you have visual access to this page and its related pages to get an insider's look at how this application was constructed. However, you are not authorized to make any changes.  To protect the integrity of this blog, the buttons and controller actions to delete or save edited comments have been disabled. After you've had your fun, check out the pages visible to normally authenticated users and see if you can find the differences!</p>
+                <p>This page was designed for an application that receives heavier user response than my blog.  Note that a moderator can easily scan comments by post to search for bad language, harassment, etc. Depending on the organization's needs, this page could easily be customized to group comments based on their contents or flag repeat offenders. On an edit, a full moderator can choose to return to this page or to the post. A removed comment is still shown in the comment tree to preserve any dialog context, but the body is replaced with red text explaining why the comment was removed.</p>
+            </div>
+        }
+
         <div class="row header">
             <div class="col-thin col-sm-1">
                 <p>Post</p>

@@ -9,6 +9,12 @@
             <div class="col-md-3">
                 <h1>Register</h1>
                 <h4>Once registered, you will be able to comment on any post and reply to other comments on this and future visits.</h4>
+                @using (Html.BeginForm("LoginGuestAdmin", "Account"))
+                {
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-round btn-dark">Admin Demo</button>
+                }
+                
             </div>
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {

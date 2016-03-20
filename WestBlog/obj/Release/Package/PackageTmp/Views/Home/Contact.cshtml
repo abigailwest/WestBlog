@@ -25,7 +25,7 @@
             </div>
             <div class="col-sm-6 col-sm-offset-1 wow fadeInUp">
                 @* FORM *@
-                <form id="contact-form" novalidate="" action="@Url.Action("Contact", "Home")" method="post">
+                <form id="contact-form" novalidate="" action="@Url.Action("Contact", "Home", new { ReturnUrl = ViewBag.ReturnUrl })" method="post">
                     @Html.AntiForgeryToken()
                     <div class="form-group">
                         <label class="sr-only" for="cname">Name</label>

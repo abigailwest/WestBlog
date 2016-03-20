@@ -51,7 +51,14 @@
                 </div>
                 <div class="form-group">
                     <div class="verify-contain col-md-offset-2 col-md-10">
-                        <button type="button" id="create" class="btn btn-dark btn-round">Create</button>
+                        @if (User.IsInRole("GuestAdmin"))
+                        {
+                            <button type="button" id="create" class="btn btn-dark btn-round" disabled>Create</button>
+                        }
+                        else
+                        {
+                            <button type="button" id="create" class="btn btn-dark btn-round">Create</button>
+                        }
                         <div id="verify">
                             <p class="text-danger">You cannot change the title once it is created. Are you sure it looks the way you want it?</p>
                             <input type="submit" value="Yes, create post!" class="btn btn-dark btn-round pull-right" />

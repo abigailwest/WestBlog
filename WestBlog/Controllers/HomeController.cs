@@ -43,7 +43,7 @@ namespace WestBlog.Controllers
             es.SendAsync(msg);
 
             //ViewBag.Message = "Your message was sent successfully. Thank you!";
-            return RedirectToAction("Index", "Posts");
+            return Redirect("http://awest.azurewebsites.net");
         }
     }
 }

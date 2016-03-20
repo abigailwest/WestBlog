@@ -47,11 +47,11 @@
                     <li>@Html.ActionLink("Blog Home", "Index", "Posts")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                    @if (User.IsInRole("Admin") || User.IsInRole("Moderator") || User.IsInRole("GuestAdmin"))
                     {
                         <li>@Html.ActionLink("Moderator", "Index", "Comments")</li>
                     }
-                    @if (User.IsInRole("Admin")) {
+                    @if (User.IsInRole("Admin") || User.IsInRole("GuestAdmin")) {
                         <li>@Html.ActionLink("Admin", "Admin", "Posts")</li>
                         <li>@Html.ActionLink("Create", "Create", "Posts")</li>
                     }

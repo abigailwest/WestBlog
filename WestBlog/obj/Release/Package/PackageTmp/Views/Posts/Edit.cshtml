@@ -58,7 +58,14 @@
 
                 <div class="form-group">
                     <div class="verify-contain col-md-offset-2 col-md-10">
-                        <button type="button" id="edit" class="btn btn-dark btn-round">Save</button>
+                        @if (User.IsInRole("GuestAdmin"))
+                        {
+                            <button type="button" id="edit" class="btn btn-dark btn-round" disabled>Save</button>
+                        }
+                        else
+                        {
+                            <button type="button" id="edit" class="btn btn-dark btn-round">Save</button>
+                        }
                         <div id="verify">
                             <p class="text-danger">Are you sure you want to permanently modify this post?</p>
                             <input type="submit" name="Submit" value="Save and go to Admin page" class="btn btn-dark btn-round pull-right btn-two" />
